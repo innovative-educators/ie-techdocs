@@ -1,0 +1,149 @@
+---
+sidebar_position: 1
+toc_max_heading_level: 2
+---
+
+# Live Event Webhooks
+
+## What is a webhook?
+When an event occurs on the platform, an http post request can be sent to your web server with that event information. For example, when a learner completes a course, an http post request would be sent, to the URL configured for your webhook, containing the course completion data. You can then process and/or pass this data onward to any third party system for automation / reporting / analytics purposes.
+
+## Integration Details
+- **Flexibility:** You receive payload data and can transform the payload into format consumable by enterprise software / email marketing systems. This may require technical team to write necessary scripts.
+
+- **Data Reliability:** If webhook delivery fails, we will automatically retry the request over time. We will retry ten times total with an exponential backoff starting from 20 seconds up to 3600 seconds, giving up approximately 3.5 hours after the first webhook delivery attempt.
+
+  - The connection will time out in 15 seconds. If your endpoint does not respond before the connection times out or if your endpoint returns a status code outside the range of 200--308, we will consider the delivery of the message as a failed attempt.
+
+- **Live Events:** Payload of event data is posted in real-time in JSON format to the appropriate URL.
+
+- **Payload Format:** Each event will fire a http request to your server in industry standard JSON format.
+
+## Configuration
+
+1. **Create a webhook endpoint:** You need a server that listens for requests over [HTTP](https://en.wikipedia.org%2Fwiki%2FHypertext_Transfer_Protocol&sa=D&sntz=1&usg=AOvVaw1INp77K2cObEDIdyxMgy5S) and consumes data in [JSON](https://en.wikipedia.org%2Fwiki%2FJSON&sa=D&sntz=1&usg=AOvVaw32AqnfKinnaZAMLeu3dxcM) format (data samples below). This can be achieved in multiple ways:
+  - Custom server code
+  - LMS or SIS with built in webhook capabilities
+  - Web based automation platforms with webhook capabilities like [Zapier](https://zapier.com/)
+
+2. **Send us your webhook details:** Send us your webhook endpoint URL and a list of courses you'd like events for and we'll configure our end to start sending notifications
+
+3. **Configure and Test:** Once we finish configuring on our end, we'll send a test notification, so you can verify that your end is properly accepting the payloads
+
+:::tip Distinguishing Courses
+If your endpoint is configured to receive multiple different courses, you can distinguish once course from another using the `notifiableId` JSON property. See the [event examples](#event-details) for more details on this.
+:::
+
+## Testing Your Webhook
+Here are a few strategies that you can employ in order to test the integration
+
+### Before your endpoint is configured on our end:
+- You can use the [event examples](#event-details) from our documentation to test against your endpoint directly. You can either send the payload directly to your endpoint or use a tool like [Postman](https://www.postman.com/) to simulate the request.
+
+### After your endpoint is configured on our end:
+- You can complete a course yourself with your user account (once per account).
+- You can request that your account be reset for a particular course so you can complete it again on your own time
+- You can request completion for an account be reset for a particular course, then re-completed in order to resend the notification
+
+## Authenticating Requests
+
+For security reasons, you may want to limit requests to your endpoint to those coming from our platform. In order to authenticate incoming requests, you can allow access only to the ones coming from our IP addresses. All other requests should be blocked / ignored.
+- **54.243.7.71**
+- **3.83.213.76**
+
+## Event Details
+
+:::note
+Currently, the only supported event is `courseComplete`
+:::
+
+<details>
+<summary>courseComplete</summary>
+
+### Trigger
+When a learner completes a course
+
+### Notable Event Attributes
+
+| Attribute | Description |
+| --------- | ----------- |
+| `user` | The leaner's email address |
+| `notifiableId` | The ID of the course that was completed |
+| `userDetail > externalCustomerId` | The learner's ID, the value associated to their account. This value is utilized during SSO to associate the learner coming from the IDP with their account in the SP (IE product). |
+| `ref1 - ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
+
+### Sample Payload
+```json
+{
+  "id": "32ed16df-27cb-5f72-90ff-4eaf39346f86",
+  "source": "course_completed",
+  "timestamp": "2019-10-17T20:50:53.103Z",
+  "type": "status_change",
+  // highlight-next-line
+  "user": "bobjohnson@school.com", // learner email
+  "companyId": "3aabdfb8-3891-5011-ad35-8e2351c5fdaf",
+  "event": "courseCompletion",
+  // highlight-next-line
+  "notifiableId": "7670fdbe-15ed-504b-a680-d404fa4b0eb4", // course id
+  "title": "New Student Orientation", // course title
+  "userDetail": { // learner details
+    "id": "61149b2c-3f37-5032-be63-f5d984de10b6",
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    // highlight-next-line
+    "externalCustomerId": "111222333444",
+    "sfContactId": null,
+    "sfAccountId": null,
+    "client": "00f928f4-8718-5043-9164-32398b165c60",
+    // highlight-next-line
+    "ref1": "111222333444",
+    "ref2": "Department",
+    "ref3": "..."
+  }
+}
+```
+</details>
+
+{/* <details>
+<summary>courseCertificate (depreciated)</summary>
+
+### Trigger
+When a course certificate should be issued
+
+### Sample Payload
+```json
+{
+  "expirationDate": null,
+  "id": "1430dddf-1085-529a-af5c-5bbce895cd3d",
+  "pdfAsset": "https://....",
+  "progressWasReset": false,
+  "resource": "d26f53f9-f791-58fc-a9e0-44fdfa245910",
+  "resourceType": "course",
+  "url": "/learn/certificates/new-student-orientation",
+  "user": "bobjohnson@school.com", // learner email
+  "companyId": "588e42a-f40f-5c5f-894e-0267bf0e5be3",
+  "timestamp": "2019-07-29T15:08:44.652Z",
+  "notifiableId": "d26f53f9-f791-58fc-a9e0-44fdfa245910", // course id
+  "courseTitle": "New Student Orientation",
+  "courseSku": null,
+  "courseSlug": "new-student-orientation-1",
+  "resourceTitle": "New Student Orientation", // course title
+  "resourceSku": null,
+  "resourceSlug": "new-student-orientation",
+  "userDetail": { // learner details
+    "id": "65cfe566-c740-54b9-8940-e9babb5f8390",
+    "firstName": "bob",
+    "lastName": "johnson",
+    "email": "bobjohnson@school.com",
+    "externalCustomerId": "111222333444",
+    "sfContactId": null,
+    "sfAccountId": null,
+    "client": "066e61ad-39e6-5f69-bfb0-228dfc4fac5a",
+    "ref1": "111222333444",
+    "ref2": "Department",
+    "ref3": "..."
+  }
+}
+```
+
+</details> */}

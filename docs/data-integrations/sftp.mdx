@@ -1,0 +1,134 @@
+---
+sidebar_position: 2
+toc_max_heading_level: 2
+pagination_next: null
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Nightly SFTP Events
+
+## Descriptoin
+Data from events that occur on the platform can be sent in bluk to your SFTP server every night, where you can then process and/or pass this data onward to any third party system for automation / reporting / analytics purposes.
+
+An SFTP Transfer is a nightly transfer of events from the platform to a secure client FTP (SFTP) in CSV or JSON format. For example, every night on an automated basis, you could receive a file containing all `courseComplete` events that occurred over the previous day.
+
+
+[What is SFTP (Simple File Transfer Protocol)](https://en.wikipedia.org/wiki/File_Transfer_Protocol#Simple_File_Transfer_Protocol&sa=D&sntz=1&usg=AOvVaw02ShwqdsfroJo6dvsXe-hy)?
+
+## Integration Details
+- **Delivery Time** - SFTP transfers are fired at roughly 2am ET (timezone based on instance configuration, but usually ET) and continue every 24 hours until requested otherwise.
+- **Delivery Format** - Files can be in either `CSV` or `JSON` format. [See event details for more info](#event-details).
+- **Data Sent** - The file will contain all events from the previous day. For example, the SFTP transfer sent at 2am on Friday will contain all of Thursday's events.
+- **Automation** - Files can be automatically detected and transformed into a format consumable by enterprise software / email marketing systems, or can be manually processed asynchronously.
+- **Data Reliability** - The connection will time out in 60 seconds. If your server does not respond before the connection times out, or takes longer than 5 minutes total to transfer the file, we will consider the delivery of the message as a failed attempt.
+  - If SFTP transfer delivery fails, we will automatically retry over time. We will retry ten times total with an exponential backoff starting from 20 seconds up to 3600 seconds, giving up approximately 3.5 hours after the first SFTP transfer attempt.
+
+## Configuration
+
+1. Have a running and accessible SFTP server.
+
+2.  Send your IE representitive the SFTP URL where you would like files to be sent. The URL should include a `username`, `password`, `domain`, `port`, and `path`.
+- Example: `sftp://username:password@host:22/path`
+- `username` and `password` should have the following special characters [percent-encoded](https://en.wikipedia.org/wiki/Percent-encoding). Double check there are no erroneous spaces or other characters in the URL.
+
+| ] | [ | ? | / | \< | ~ | # | ` | ! | @ | $ | % | ^ | & | * | \} | + | = | : | " | ; | ' | , | \> | \{ | space |
+|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+| %5D | %5B | %3F | %2F | %3C | %7E | %23 | %60 | %21 | %40 | %24 | %25 | %5E | %26 | %2A | %7D | %2B | %3D | %3A | %22 | %3B | %27 | %2C | %3E | %7B | %20 |
+
+3. Let us know your desired data format. Choices are: `JSON` or `CSV`. [See event details for more info](#event-details).
+
+## Testing Your Integration
+Here are a few strategies that you can employ in order to test the integration
+
+### Before your SFTP URL is configured on our end:
+- You can use the [event examples](#event-details) from our documentation to test against your automations directly. You can either copy and paste the file directly to your SFTP folder or use an SFTP client like [FileZilla](https://filezilla-project.org/) to send the file to your folder via SFTP.
+
+### After your SFTP URL is configured on our end:
+- When configured, a test file will be sent to your SFTP server, which you can use to verify that the connection is working properly.
+- You can confirm that a file is being sent to the correct location and in the desired format every night at around 2am ET. Then you can use this file to test your automations.
+
+## Authenticating Requests
+For security reasons, you may want to limit requests to your endpoint to those coming from our platform. In order to authenticate incoming requests, you can allow access only to the ones coming from our IP addresses. All other requests should be blocked / ignored.
+- 54.243.7.71
+- 18.209.174.66
+- 3.83.213.76
+- 168.245.34.51
+- 167.89.97.235
+
+## Event Details
+
+<details>
+<summary>courseComplete</summary>
+
+### Trigger
+When a learner completes a course
+
+### Notable Event Attributes
+
+| Attribute | Description |
+| --------- | ----------- |
+| `user` | The leaner's email address |
+| `notifiableId` | The ID of the course that was completed |
+| `userDetail > externalCustomerId` | The learner's ID, the value associated to their account. This value is utilized during SSO to associate the learner coming from the IDP with their account in the SP (IE product). |
+| `ref1 - ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
+
+### Sample Payload
+<Tabs>
+  <TabItem value="json" label="JSON">
+
+  - **File Name Example:** `courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.json`
+  - **Format Notes:** Data will be an array of events sent in batch nightly. In other words, the standard JSON event for `courseComplete`, but multiple of them grouped into an JSON array.
+
+  ```json title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.json"
+  [{
+    "id": "32ed16df-27cb-5f72-90ff-4eaf39346f86",
+    "source": "course_completed",
+    "timestamp": "2019-10-17T20:50:53.103Z",
+    "type": "status_change",
+    // highlight-next-line
+    "user": "bobjohnson@school.com", // learner email
+    "companyId": "3aabdfb8-3891-5011-ad35-8e2351c5fdaf",
+    "event": "courseCompletion",
+    // highlight-next-line
+    "notifiableId": "7670fdbe-15ed-504b-a680-d404fa4b0eb4", // course id
+    "title": "New Student Orientation", // course title
+    "userDetail": { // learner details
+      "id": "61149b2c-3f37-5032-be63-f5d984de10b6",
+      "firstName": "Bob",
+      "lastName": "Johnson",
+      // highlight-next-line
+      "externalCustomerId": "111222333444",
+      "sfContactId": null,
+      "sfAccountId": null,
+      "client": "00f928f4-8718-5043-9164-32398b165c60",
+      // highlight-next-line
+      "ref1": "111222333444",
+      "ref2": "Department",
+      "ref3": "..."
+    }
+  }, {
+    ...
+  }]
+  ```
+
+  </TabItem>
+  <TabItem value="csv" label="CSV">
+  - **File Name Example:** `courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.csv`
+  - **Format Notes:** Data will be the past days events sent in batch nightly – one `courseComplete` event per row and a header row at the top.
+
+  ```csv showLineNumbers title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.csv"
+  id,source,timestamp,type,user,companyId,event,notifiableId,title,userDetail.id,userDetail.firstName,userDetail.lastName,userDetail.externalCustomerId,userDetail.sfContactId,userDetail.sfAccountId,userDetail.client,userDetail.ref1,userDetail.ref2,userDetail.ref3
+  32ed16df-27cb-5f72-90ff-4eaf39346f86,course_completed,2019-10-17T20:50:53.103Z,status_change,bobjohnson@school.com,3aabdfb8-3891-5011-ad35-8e2351c5fdaf,courseCompletion,7670fdbe-15ed-504b-a680-d404fa4b0eb4,New Student Orientation,61149b2c-3f37-5032-be63-f5d984de10b6,Bob,Johnson,111222333444,null,null,00f928f4-8718-5043-9164-32398b165c60,111222333444,Department
+  ...
+  ```
+  </TabItem>
+</Tabs>
+
+
+</details>
+
+:::note
+Currently, the only supported event is `courseComplete`
+:::

@@ -1,0 +1,112 @@
+---
+sidebar_position: 7
+---
+
+import ImplementationOverview from './_implementation-overview.md'
+import BuildingALoginUrl from './_building-a-login-url.md'
+import ExternalCustomerId from '../_external-customer-id.md'
+import AccountRedirectUrls from '../configuring-saml/_account-redirect-urls.md'
+
+# Configuring CAS (2.0 / 3.0)
+
+:::note info
+For clarification on terms in these docs, please refer to the [Definition of Terms](../../definition-of-terms) page
+:::
+
+## Getting Started
+
+In many cases the CAS configuration for the SP requires only a few key pieces of information to set up basic authentication. The IdP may require more in-depth configuration in order to meet the needs of your integration.  You will need to refer to your IdP documentation for any advanced configuration. Because this configuration can differ from IdP to IdP, we are unable to provide specific instructions for every IdP.
+
+## Implementation Overview
+
+<ImplementationOverview />
+
+## Configuring your SP client {#configuring-the-sp}
+
+### What IE needs from you
+
+Please provide your IE representative the following, so they can configure your SP client.
+
+1. The `serviceValidate endpoint` for your CAS server.
+
+    If your CAS server is available at https://casserver.org/, then your CAS serviceValidate endpoint is most likely:
+    - https://casserver.org/cas/serviceValidate for CAS 2.0
+    - https://casserver.org/cas/p3/serviceValidate for CAS 3.0
+
+    {/* :::note Have Admin Privileges?
+    If you have access to your SSO settings (uncommon), add this URL to the field labeled CAS Server Validate URL. You can find your SSO settings under Settings > Integrations > SSO or here: `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/learn/manager/sso-settings`
+    ::: */}
+
+2. `Account Redirect URLs` Once SSO is configured, there is no need for the Login/Logout/Register/Account pages on the SP side anymore. IE will redirect the Login/Register pages to your new SSO link if able, but the **Account Logout** and **Account Details** pages need an equivalent or relevant page on the IdP side to redirect to.
+
+  <AccountRedirectUrls />
+
+3. `Date to begin enforcing SSO` Once SSO is complete, when would you like to turn off (redirect) native registration. This is mostly relevant for clients who already have learners utilizing native registration. If you don't have any learners using native registration, this redirect can be configured immediately.
+
+## Configuring your IdP server {#configuring-the-idp}
+
+### Configure the externalCustomerID {#external-customer-id}
+The `cas:user` is the unique ID that will identify CAS users coming from the IdP. This value is stored internally as `externalCustomerId`, and when a learner authenticates, it is used to determine whether to connect them to their pre-existing account or provision them a new one, if this is the learner's first time authenticating. The attributes passed by the IdP will be used to create the new account, or if connecting to a pre-existing account, the attributes passed by the IdP will be used to update it.
+
+:::caution Important
+To avoid account clashes, the `externalCustomerId` value must be unique amongst **all learners** from **all clients** in the same instance. With sometimes hundreds of clients in the same instance, this can mean 100s of thousands of users. See below for recommendations on how to configure this value.
+:::
+
+:::note
+In WSO2 the `cas:user` is controlled by the field (Subject Claim URI)
+:::
+
+<ExternalCustomerId />
+
+### Configure Attributes
+
+We support the following attributes that can be mapped from your IdP. The attributes returned in the authentication request, as well as the attribute names, will vary depending on the IdP. Check with your IdP to determine the available attributes.
+
+The following list of attributes are available for mapping to any attribute returned from your IdP.
+
+| Attribute | Type | Description | Required? |
+| --------- | ---- | ----------- | --------- |
+| `firstname` | string | The first name of the learner | Recommended |
+| `lastname` | string | The last name of the learner | Recommended |
+| `email` | string | The email address of the learner | Recommended |
+| `ref1` | string | Data to be associated with the user in reports. examples: role, department, major, title, year, studentId | Optional |
+| `ref2` | string | Data to be associated with the user... | Optional |
+| `ref3` | string | Data to be associated with the user... | Optional |
+
+#### Example
+The following is an example of a successful CAS ticket validation:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
+  <cas:authenticationSuccess>
+    <cas:user>test</cas:user>
+    <cas:attributes>
+      <cas:firstname>bob</cas:firstname>
+      <cas:lastname>jones</cas:lastname>
+      <cas:email>bobjones@example.org</cas:email>
+    </cas:attributes>
+  </cas:authenticationSuccess>
+</cas:serviceResponse>
+```
+
+
+### Learner Access Restrictions
+All access restrictions, or lack there of, are handled on the IdP side of things. So if applicable, make sure sufficent role permissions have been granted to the learners who'll need access to the IE platform before they need it.
+
+From IE's perspective, there's not much downside to providing access to all accounts in the IdP side (ie no restrictions) as learners who need access to the IE content may change, and any learners who no longer need access or who never needed it will typically avoid.
+
+## Authentication {#authentication}
+<BuildingALoginUrl />
+
+## Testing Authentication {#testing}
+It's important to test the authentication flow before going live. This will ensure that the integration has been configured successfully before learners attempt to access their content.
+
+To test, simply
+1. **Authenticate** from an incognito browser, using the SP login URL to authenticate into the IE platform through SSO.
+2. **Notify your IE representative** Once notified, IE will consult the SSO logs and verify the correct user details are being sent over.
+
+## Troubleshooting {#troubleshooting}
+If authenitcation was successful, you should be redirected to the IE platform and logged in. If you are not logged in, and are still located on the IdP side, there's most likely an issue with the configuration on the IdP side.
+
+If on the other hand you are seeing an error, notify your IE representative for next steps. Please include any error messages you see, as well as the page URL you are on.
