@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Introduction
+# Single Sign On (SSO)
 
 Make authentication seamless for learners and maintain data accuracy by automating learner account creation
 
@@ -16,12 +16,12 @@ In addition, SSO can automate the passing of user profile data from the identity
 
 ## What type of SSO do we support?
 
-- [SAML 2.0](/docs/single-sign-on/saml2)
-- [SAML with Azure](/docs/single-sign-on/azure)
-- [SAML with ADFS](/docs/single-sign-on/adfs)
-- [SAML with Shibboleth](/docs/single-sign-on/shibboleth)
-- [SAML with PortalGuard](/docs/single-sign-on/portalguard)
-- [CAS protocol 2.0 and 3.0](/docs/single-sign-on/cas)
+- [SAML 2.0](./saml2)
+- [SAML with Azure](./azure)
+- [SAML with ADFS](./adfs)
+- [SAML with Shibboleth](./shibboleth)
+- [SAML with PortalGuard](./portalguard)
+- [CAS protocol 2.0 and 3.0](./cas)
 
 :::info
 We can’t use LDAP as our primary protocol but it does work with the SSO solutions we support.
