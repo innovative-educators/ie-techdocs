@@ -161,3 +161,39 @@ If you would like to redirect the user after they are logged out, this can be co
 :::
 
 ## Configuring your SP Redirects {#redirects}
+
+### What are these redirects?
+
+With SSO enabled for your client, learners have no need for our Login, Register or Account pages. These authentication and account pages should be redirected to equivalent pages in your system. Use this page as reference for the redirects that need to be implemented after SSO is complete.
+
+#### External Login URL
+
+-   Redirect login to this URL. You can use {{returnTo}} to include the URL the learner should be returned to after logging in via SSO.
+-   Example: https://www.example.com/login?returnTo={{returnTo}}
+-   For SAML, defaulting to the SAML login URL with the returnTo parameter is a good idea. Example:
+    -   https://www.studentlingo.com/access/saml/login/school-slug?returnTo={{returnTo}}
+
+This is an optional URL you can fill in if you want **all** students to log in via SSO. Filling this in will redirect the login page to the URL you specify. It is expected the user will log in on the external page, and then you will send their information back to TI as part of an SSO process, at which point the user will be signed into TI. You can use {{returnTo}} in the URL and TI will automatically fill in what URL the student should be returned to after they have logged in. For example: http://www.example.org/sign_in?return_to={{returnTo}}&from=TI
+
+#### Account Logout URL
+
+-   Redirect logout to this URL. You can use {{returnTo}} to include the URL the learner should be returned to after logging out via SSO.
+-   Example: https://www.example.com/logout?returnTo={{returnTo}}
+
+Similar to the Login URL, if you would like **all** students to log out via SSO, fill in this URL field. You can use {{returnTo}} in the URL and TI will automatically fill in what URL the student should be returned to after they have logged in. For example: http://www.example.org/logout?return_to={{returnTo}}&from=TI
+
+#### External Register URL
+
+-   Redirect registration to this URL. You can use {{returnTo}} to include the URL the learner should be returned to after registration.
+-   Example: https://www.example.com/register?returnTo={{returnTo}}
+-   For SAML, defaulting to the SAML login URL with the returnTo parameter is a good idea. Example:
+    -   https://www.studentlingo.com/access/saml/login/school-slug?returnTo={{returnTo}}
+
+This is an optional URL you can fill in if you want **all** students to register externally. This will redirect both the free registration page and the checkout page if the user is signed out. On this page you will want to provide the option of registering or logging in. It is expected the user will register or log in on the external page, and then you will send their information back to TI as part of an SSO process, at which point the user will be signed into TI. You can use {{returnTo}} in the URL and TI will automatically fill in what URL the student should be returned to after they have registered or logged in. This is particularly important for this endpoint as we will specify a returnTo URL that will put the student back into the checkout flow. For example: http://www.example.org/register?return_to={{returnTo}}&from=TI
+
+#### Account Settings URL
+
+-   Redirect learners to this URL when they try to change their account or profile settings, such as name, email, or password. You can use {{returnTo}} to include the URL the learner should be returned to after updating their profile.
+-   Example: https://www.example.com/settings?returnTo={{returnTo}}
+
+This is an optional URL you can fill in if you want **all** students to update their email address, name, and other profile information externally. If you do allow email address updates externally, you will want to also provide an externalCustomerId during checkout as described in our SSO implementation documentation. If you do not specify an externalCustomerId, then two accounts will be created after the student updates their email address outside of TI. You can use {{returnTo}} in the URL and TI will automatically fill in what URL the student should be returned to after they have updated their profile. For example: http://www.example.org/update_profile?return_to={{returnTo}}&from=TI

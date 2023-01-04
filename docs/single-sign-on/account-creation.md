@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Learner Account Creation and Updates
+# Account Creation and Updates
 
 Once SSO has been successfully implemented, learners will access the IE platform and their designated content by:
 
