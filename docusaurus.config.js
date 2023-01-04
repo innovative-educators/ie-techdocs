@@ -122,6 +122,10 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ['php'],
       },
+      tableOfContents: {
+        minHeadingLevel: 2,
+        maxHeadingLevel: 5,
+      },
     }),
 };
 

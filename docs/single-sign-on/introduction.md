@@ -1,7 +1,3 @@
----
-sidebar_position: 1
----
-
 # Single Sign On (SSO)
 
 Make authentication seamless for learners and maintain data accuracy by automating learner account creation
@@ -14,7 +10,7 @@ This is similar to how you can use one set of credentials, like a Facebook usern
 
 In addition, SSO can automate the passing of user profile data from the identity provider (your end) to a service provider like IE. This side steps the issues of having learners input profile details manually, such as wrong or typo-ed emails / names.
 
-## What type of SSO do we support?
+## What type of SSO do we support? {#sso-support}
 
 - [SAML 2.0](./saml2)
 - [SAML with Azure](./azure)
@@ -23,6 +19,6 @@ In addition, SSO can automate the passing of user profile data from the identity
 - [SAML with PortalGuard](./portalguard)
 - [CAS protocol 2.0 and 3.0](./cas)
 
-:::info
+:::note
 We can’t use LDAP as our primary protocol but it does work with the SSO solutions we support.
 :::
