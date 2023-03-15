@@ -27,7 +27,7 @@ For clarification on terms in these docs, please refer to the [Definition of Ter
 
 Please provide your `IdP XML Metadata file` to your IE representative, so they can configure the SP. This tends to be the easiest way to share the details required for SP configuration.
 
-If easier, you may provide these details individually instead. See required configuration details here:
+If more convienient, you may provide these details individually instead. See required configuration details here:
   - **IdP Single Sign-on URL:** TI supports SP-initiated SSO using the HTTP-REDIRECT binding.
   - **IdP Single Logout URL:** Single logout is not currently supported, but you may still enter this value here for future use.
   - **IdP X.509 Certificate:** The public key certificate from the IdP. This is required for security purposes in order to validate authentication requests. The X.509 Certificate should be entered in PEM format with a header. It should start with `-----BEGIN CERTIFICATE-----`. If it does not, you can format the X.509 certificate with an [external tool](https://www.samltool.com/format_x509cert.php).
@@ -40,7 +40,7 @@ If you have access to your instance settings (not common), options are configura
 
 ## Configuring your IdP server {#configuring-the-idp}
 
-Once the settings have been added to your instance, you will also need to register the SP with your IdP. This process is different for each provider.
+Once the settings have been added to your instance client or directly to your instance (not common), you will also need to register the SP with your IdP. This process is different for each provider.
 
 ### 1. What you'll need from IE
 Generally you will need the following information which can be obtained for your IE representative.
@@ -49,9 +49,13 @@ Generally you will need the following information which can be obtained for your
 
 - The `SP metadata XML file` which includes the relevant configuration details to use. Often IdP systems can import this file to save you the hassle of configuring manually. It contains the following required values:
 
-  - **Assertion Consumer Service (ACS) URL (also called the Single Sign-on URL):** The endpoint that receives HTTP-POST bindings from the IdP. The ACS URL can be found within the TI SP Metadata. If you have to type it in manually, it will be: `https://<school domain>/access/saml/consumer` or `https://<school domain>/access/saml/consumer/client-slug`
+  - **Assertion Consumer Service (ACS) URL (also called the Single Sign-on URL):** The endpoint that receives HTTP-POST bindings from the IdP. The ACS URL can be found within the TI SP Metadata. If you have to type it in manually, it will be:
+    - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/consumer/<client-slug>`
+    - Or `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/consumer` if in your own instance (uncommon).
 
-  - **Entity Id:** unique identifier for your TI instance SP. The Entity Id can be found within the TI SP Metadata. If you have to type it in manually, it will be `https://<school domain>/access/saml/metadata` or `https://<school domain>/access/saml/metadata/client-slug`
+  - **Entity Id:** unique identifier for your TI instance SP. The Entity Id can be found within the TI SP Metadata. If you have to type it in manually, it will be:
+    - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/metadata/<client-slug>`
+    - Or `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/metadata` if in your own instance (uncommon).
 
   - **X.509 Certificate:** TI's public certificate for signing and encryption. This certificate can be found within the TI SP Metadata. If you have to type it in manually, see the appendix of this article.
 
@@ -60,7 +64,7 @@ If you have access to your instance settings (not common), they can be obtained 
 :::
 
 ### 2. Configure Name Identifier {#external-customer-id}
-The Name Identifier or `NAME_ID` is the unique ID that will identify SAML users coming from the IdP. Internally this is stored as `externalCustomerId` and when a learner authenticates, is used to determine whether to connect them to an existing account or provision them a new one.
+The Name Identifier or `NAME_ID` is the unique ID that will identify SAML users coming from the IdP. This value is stored internally as `externalCustomerId` and when a learner authenticates, is used to determine whether to connect them to an existing account or provision them a new one.
 
 :::caution Important
 To avoid account clashes, the `NAME_ID` value must be unique amongst **all learners** of **all clients** in the same instance.
@@ -135,65 +139,69 @@ $metadata['https://example.com'] = array(
 );
 ```
 
+### 4. Learner Access Restrictions
+All access restrictions, or lack there of, are handled on the IdP side of things. So if applicable, make sure sufficent role permissions have been granted to the learners who'll need access to the IE platform before they need it.
+
+From IE's perspective, there's not much downside to providing access to all accounts in the IdP side (ie no restrictions) as learners who need access to the IE content may change, and any learners who no longer need access or who never needed it will typically avoid.
+
 ## Testing Authentication {#testing}
 
 ### Authentication
-TI supports SP-initiated SSO with SAML, meaning that the login flow begins on the TI platform.
+Logins with IE are SP-initiated SSO with SAML, meaning that the login flow begins on the the SP platform.
 
-- In order to log a user into the TI instance from an external system, you can create a link to the following path:
-  - `https://<product domain>/access/saml/login` or
-  - `https://<product domain>/access/saml/login/client-slug`
+- In order to log a user into their IE client from an external system, you can direct learners to the following URL as a link, a dashboard button, or however else you see fit:
+  - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/login/<client-slug>`
+  - Your `<client-slug>` will be provided by IE. There will be none if you have your own instance (not common)
 
-- It is best practice to set the "External Login URL" SSO Setting to "/access/saml/login" or "/access/saml/login/client-slug" (if you are configuring SSO settings for a Client) in order for users to get directed to the correct sign in page when clicking "Sign in" from within TI.
+- Once a user visits this page, they will be redirected to your IdP for authentication. After authentication is successful, the IdP will send the user back to IE platform with a SAML Response that includes any attributes per the configuration. The user will then be logged into thier SP client and will have access to the content that has been provisioned per the `licenseId` configured in their attributes.
 
-- Once a user visits this page, they will be redirected to your IdP for authentication. After authentication is successful, the IdP will send the user back to the TI platform with a SAML Response that includes any attributes per the configuration. The user will then be logged into TI and will have access to the content that have been specified in their attributes, if any.
-
-- Also, redirectTo query parameter can be added redirect a learner after authentication
-
-:::note
-IdP-initiated SSO is not supported at this time.
-:::
+- Optionally, a `redirectTo` query parameter can be added to the login URL to redirect a learner after authentication
+  - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/login/<client-slug>`**`?returnTo=<redirect-path>`**
 
 :::note
-SAML Single Log Out is not supported at this time. Logging out currently logs the learner of the platform only.
-
-If you would like to redirect the user after they are logged out, this can be configured in the client SSO setting. For example, you could show the user a message saying they are logged out, or the login form should they choose to login again. Talk to your IE representative to configure or update this redirect if needed.
+IdP-initiated Login and Single IdP Logout are not supported at this time. Logging out currently logs the learner off the platform only.
 :::
 
 ## Configuring your SP Redirects {#redirects}
 
 ### What are these redirects?
 
-With SSO enabled for your client, learners have no need for our Login, Register or Account pages. These authentication and account pages should be redirected to equivalent pages in your system. Use this page as reference for the redirects that need to be implemented after SSO is complete.
+With SSO enabled for your client, learners have no need for the Login, Register or Account pages on the SP side. These authentication and account pages should be redirected to equivalent or relevant pages on the IdP side. Use this as reference for the redirects that need to be implemented after SSO is complete. You can provide the desired redirect URLs to your IE representative to configure for our unless you have access to your own instance settings (uncommon), in which case you could configure them yourself.
 
-#### External Login URL
+#### Account Details URL
 
--   Redirect login to this URL. You can use {{returnTo}} to include the URL the learner should be returned to after logging in via SSO.
--   Example: https://www.example.com/login?returnTo={{returnTo}}
--   For SAML, defaulting to the SAML login URL with the returnTo parameter is a good idea. Example:
-    -   https://www.studentlingo.com/access/saml/login/school-slug?returnTo={{returnTo}}
+- This redirects the account details page on our end to the URL provided.
+  - **Example:** `https://www.example.com/settings`
 
-This is an optional URL you can fill in if you want **all** students to log in via SSO. Filling this in will redirect the login page to the URL you specify. It is expected the user will log in on the external page, and then you will send their information back to TI as part of an SSO process, at which point the user will be signed into TI. You can use {{returnTo}} in the URL and TI will automatically fill in what URL the student should be returned to after they have logged in. For example: http://www.example.org/sign_in?return_to={{returnTo}}&from=TI
+We recommend this URL to point to a coorisponding page on the IdP side where learners can adjust their account or profile settings, such as name, email, or password if available. With the `externalCustomerId` configured, these learner account details will update on the SP side the next time the learner authenticates.
 
 #### Account Logout URL
 
--   Redirect logout to this URL. You can use {{returnTo}} to include the URL the learner should be returned to after logging out via SSO.
--   Example: https://www.example.com/logout?returnTo={{returnTo}}
+- This redirects the SP logout link (in the profile dropdown) to the URL provided.
+  - **Example:** `https://www.example.com/logout`
 
-Similar to the Login URL, if you would like **all** students to log out via SSO, fill in this URL field. You can use {{returnTo}} in the URL and TI will automatically fill in what URL the student should be returned to after they have logged in. For example: http://www.example.org/logout?return_to={{returnTo}}&from=TI
+This, on it's own, only logs the learner out of the SP platform and not out of their SSO or the IdP side. For circumstances like a shared computer termainal, it's important that learners know they aren't technically logged out of their SSO accounts. A good place to redirect learners for this would be something like an account dashboard, or a URL that logs them out of SSO if available.
+
+#### External Login URL
+
+- This redirects the SP native login page to the URL provided.
+
+- Optoinally you can use `{{returnTo}}` to include the URL the learner should be returned to after logging in via SSO.
+  - **Example:** `https://www.example.com/login?returnTo={{returnTo}}`
+
+- For SAML, defaulting to the SAML login URL with the `returnTo` parameter tends to be the best / easiest option.
+  - **Example:** `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/login/<client-slug>?returnTo={{returnTo}}`
+
+This is an optional URL you can fill in if you want **all** learners to log in via SSO. Filling this in will redirect the login page to the URL you specify. It is expected the user will log in on the external page, and then you will send their information back to TI as part of an SSO process, at which point the user will be signed into TI. Optoinally you can use `{{returnTo}}` in the URL and TI will automatically fill in what URL the learner should be returned to after they have logged in.
 
 #### External Register URL
 
--   Redirect registration to this URL. You can use {{returnTo}} to include the URL the learner should be returned to after registration.
--   Example: https://www.example.com/register?returnTo={{returnTo}}
--   For SAML, defaulting to the SAML login URL with the returnTo parameter is a good idea. Example:
-    -   https://www.studentlingo.com/access/saml/login/school-slug?returnTo={{returnTo}}
+- This redirects the SP native registration page to the URL provided.
 
-This is an optional URL you can fill in if you want **all** students to register externally. This will redirect both the free registration page and the checkout page if the user is signed out. On this page you will want to provide the option of registering or logging in. It is expected the user will register or log in on the external page, and then you will send their information back to TI as part of an SSO process, at which point the user will be signed into TI. You can use {{returnTo}} in the URL and TI will automatically fill in what URL the student should be returned to after they have registered or logged in. This is particularly important for this endpoint as we will specify a returnTo URL that will put the student back into the checkout flow. For example: http://www.example.org/register?return_to={{returnTo}}&from=TI
+- Optoinally you can use `{{returnTo}}` to include the URL the learner should be returned to after registration.
+  - **Example:** `https://www.example.com/register?returnTo={{returnTo}}`
 
-#### Account Settings URL
+- For SAML, defaulting to the SAML login URL with the `returnTo` parameter tends to be the best / easiest option so long as learners are already registered.
+  - **Example:** `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/login/<client-slug>?returnTo={{returnTo}}`
 
--   Redirect learners to this URL when they try to change their account or profile settings, such as name, email, or password. You can use {{returnTo}} to include the URL the learner should be returned to after updating their profile.
--   Example: https://www.example.com/settings?returnTo={{returnTo}}
-
-This is an optional URL you can fill in if you want **all** students to update their email address, name, and other profile information externally. If you do allow email address updates externally, you will want to also provide an externalCustomerId during checkout as described in our SSO implementation documentation. If you do not specify an externalCustomerId, then two accounts will be created after the student updates their email address outside of TI. You can use {{returnTo}} in the URL and TI will automatically fill in what URL the student should be returned to after they have updated their profile. For example: http://www.example.org/update_profile?return_to={{returnTo}}&from=TI
+This is an optional URL you can fill in if you want **all** learners to register externally (which is the case with SSO enabled). This will redirect both the free registration page and the checkout page if the user is signed out. On this page you will want to provide the option of registering or logging in. It is expected the user will register or log in on the external page, and then you will send their information back to TI as part of an SSO process, at which point the user will be signed into TI. You can use `{{returnTo}}` in the URL and TI will automatically fill in what URL the learner should be returned to after they have registered or logged in. This is particularly important for this endpoint as we will specify a returnTo URL that will put the learner back into the checkout flow.

@@ -9,8 +9,8 @@
 
 #### Recommendations
 
-- **Use an ID that doesn't change:** Since this value used to sync learner to their accounts or create a new account if one doesn't exist for a learner, it's recommended that this value be from a source that doesn't change. If the value does change, then the learner will receive a fresh account upon authenticating and will lose all previous progress.
+- **An ID that doesn't change:** Since this value used to sync learner to their accounts or create a new account if one doesn't exist for a learner, it's recommended that this value be from a source that doesn't change. If the value does change, then the learner will receive a fresh account upon authenticating and will lose all previous progress.
 
-  - **Email Address:** Sending an email as the `externalCustomerId` can cause the problem mentioned above when a learner's email changes due to a name change. That said, email addresses are used by many clients without much headache. Though it isn't the perfect option, most of our clients consider it good enough.
+  - **Email Address:** Sending an email as the `externalCustomerId` can occasionally cause this if learner's email is tied to their name in a way where any changes to their name causes a change to their email. That said, email addresses are used by many clients without much headache. Though it isn't the perfect solution, a majority of our clients consider it good enough.
 
-  - **Unique IDs:** If available, an ID with sufficient randomness to be collision resistant, or appending a domain or school name to less random ID like this `id130242@schooldomain.com`, has the benefits of being both unique and unchanging. This tends to be the optimal approach and is what we recommend first.
+  - **Unique IDs:** If available, an ID with sufficient randomness to be collision resistant, or appending a domain or school name to less random ID like this `id130242@schooldomain.com`, has the benefits of being both unique and unchanging. This tends to be the optimal approach and is what we recommend first if available.

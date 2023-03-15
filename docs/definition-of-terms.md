@@ -13,6 +13,15 @@
 - **Signed Responses** - Allows the SP to verify a response actually came from the IdP by validating the response signature with the IdP certificate. This is not enabled by default in TI. If your IdP supports this option, you will need to ensure the X.509 certificates are exchanged between the SP and IdP, and IE will need to turn on "Sign Requests" under SAML Advanced Settings in TI's SSO Settings interface.
 - **Encrypted Assertions** - The SAML format supports end-to-end encryption of responses to ensure that the SP is the only partly capable of reading user information. **This is enabled by default in TI**. If your IdP supports this option, you will need to ensure the X.509 certificates are exchanged between the SP and IdP. If your IdP does **not** support this option, IE will need to turn on "Allow Unencrypted Assertions" under SAML Advanced Settings in TI's SSO Settings interface.
 
+## Product Domains {#product-domain}
+  - www.go2orientation.com
+  - www.go2knowledge.org
+  - www.college2success.com
+  - www.tutorlingo.org
+  - www.studentlingo.com
+  - www.parentlingo.com
+  - www.go2ie.com
+
 ## Thought Industries
 - **Thought industries (TI)** - Platform utilized by IE for content delivery
 - **Client** - A subdivided part of an instance (see below) designated as school portals
