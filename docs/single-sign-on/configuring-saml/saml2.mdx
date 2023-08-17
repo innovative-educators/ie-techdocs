@@ -2,21 +2,23 @@
 sidebar_position: 1
 ---
 
-import ExternalCustomerId from './_external-customer-id.md'
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ExternalCustomerId from '../_external-customer-id.md'
 import ImplementationOverview from './_implementation-overview.md'
 
 # Configuring SAML
 
 ## Getting Started
 
+:::note info
+For clarification on terms in these docs, please refer to the [Definition of Terms](.../definition-of-terms) page
+:::
+
 In many cases the SAML 2.0 configuration for the SP requires only a few key pieces of information to set up basic authentication. The IdP may require more in-depth configuration in order to meet the needs of your integration (e.g. Attribute mappings, encrypted assertions, etc).  You will need to refer to your IdP documentation for any advanced configuration. Because this configuration can differ from IdP to IdP, we are unable to provide specific instructions for every IdP.
 
 :::tip
-We have [documentation for some of the more common IdPs here](./introduction#sso-support).
-:::
-
-:::note info
-For clarification on terms in these docs, please refer to the [Definition of Terms](../definition-of-terms) page
+We have additional documentation for some of the more common IdPs as well. When you've finished reading this article, you may want to check there for more specific instructions. [See the list of supported IdPs here](../introduction#sso-support).
 :::
 
 ## Implementation Overview
@@ -25,14 +27,23 @@ For clarification on terms in these docs, please refer to the [Definition of Ter
 
 ## Configuring your SP client {#configuring-the-sp}
 
-Please provide your `IdP XML Metadata file` to your IE representative, so they can configure the SP. This tends to be the easiest way to share the details required for SP configuration.
+### What IE needs from you
 
-If more convienient, you may provide these details individually instead. See required configuration details here:
-  - **IdP Single Sign-on URL:** TI supports SP-initiated SSO using the HTTP-REDIRECT binding.
-  - **IdP Single Logout URL:** Single logout is not currently supported, but you may still enter this value here for future use.
-  - **IdP X.509 Certificate:** The public key certificate from the IdP. This is required for security purposes in order to validate authentication requests. The X.509 Certificate should be entered in PEM format with a header. It should start with `-----BEGIN CERTIFICATE-----`. If it does not, you can format the X.509 certificate with an [external tool](https://www.samltool.com/format_x509cert.php).
+Please provide your IE representative the following, so they can configure your SP client.
 
-These settings should be retrieved from your IdP, and can often be found in the administration console (if applicable) or extracted from the IdP metadata XML of your provider.
+- `IdP XML Metadata file` This tends to be the easiest way to share the details required for SP configuration. If more convienient, you may provide these details individually instead. These settings should be retrieved from your IdP, and can often be found in the administration console (if applicable) or extracted from the `IdP Metadata XML` of your provider.
+
+
+  <details className={'alert alert--secondary'}>
+  <summary>Required IdP Metadata details</summary>
+
+    - **IdP Single Sign-on URL:** TI supports SP-initiated SSO using the HTTP-REDIRECT binding.
+
+    - **IdP Single Logout URL:** Single logout is not currently supported, but you may still enter this value here for future use.
+
+    - **IdP X.509 Certificate:** The public key certificate from the IdP. This is required for security purposes in order to validate authentication requests. The X.509 Certificate should be entered in PEM format with a header. When entered, it should start with `-----BEGIN CERTIFICATE-----`. If it does not, you can format the X.509 certificate with an [external tool](https://www.samltool.com/format_x509cert.php).
+
+  </details>
 
 :::note
 If you have access to your instance settings (not common), options are configurable under the SAML 2.0 section under Single Sign-on.
@@ -42,12 +53,15 @@ If you have access to your instance settings (not common), options are configura
 
 Once the settings have been added to your instance client or directly to your instance (not common), you will also need to register the SP with your IdP. This process is different for each provider.
 
-### 1. What you'll need from IE
+### What you need from IE
 Generally you will need the following information which can be obtained for your IE representative.
 
 - The `licenseId` for your specific IE client. (this is a static attribute that IE will provide that needs to be passed for each user).
 
-- The `SP metadata XML file` which includes the relevant configuration details to use. Often IdP systems can import this file to save you the hassle of configuring manually. It contains the following required values:
+- The `SP Metadata XML file` which includes the relevant configuration details to use. Often IdP systems can import this file to save you the hassle of configuring manually.
+
+  <details className={'alert alert--secondary'}>
+  <summary>Required SP Metadata details</summary>
 
   - **Assertion Consumer Service (ACS) URL (also called the Single Sign-on URL):** The endpoint that receives HTTP-POST bindings from the IdP. The ACS URL can be found within the TI SP Metadata. If you have to type it in manually, it will be:
     - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/consumer/<client-slug>`
@@ -59,11 +73,13 @@ Generally you will need the following information which can be obtained for your
 
   - **X.509 Certificate:** TI's public certificate for signing and encryption. This certificate can be found within the TI SP Metadata. If you have to type it in manually, see the appendix of this article.
 
+  </details>
+
 :::note
 If you have access to your instance settings (not common), they can be obtained from the SSO Settings page by clicking `Download SP Metadata`.
 :::
 
-### 2. Configure Name Identifier {#external-customer-id}
+### Configure Name Identifier {#external-customer-id}
 The Name Identifier or `NAME_ID` is the unique ID that will identify SAML users coming from the IdP. This value is stored internally as `externalCustomerId` and when a learner authenticates, is used to determine whether to connect them to an existing account or provision them a new one.
 
 :::caution Important
@@ -77,10 +93,10 @@ To avoid account clashes, the `NAME_ID` value must be unique amongst **all learn
 <ExternalCustomerId />
 
 :::tip
-[Check the other SSO integrations we support for more specific approaches to configuring the NAME_ID.](./introduction#sso-support)
+[Check the other SSO integrations we support for more specific approaches to configuring the NAME_ID.](../introduction#sso-support)
 :::
 
-### 3. Configure Attributes
+### Configure Attributes
 
 We support the following attributes that can be mapped from your IdP. The attributes returned in the authentication request, as well as the attribute names, will vary depending on the IdP. Check with your IdP to determine the available attributes.
 
@@ -101,16 +117,19 @@ For learners that should be associated with a client (almost every case), you mu
 #### LicenseId as a Static Attribute
 To avoid the need for an extra column for every user in your system, you can utilize a `static attribute` to send over the required `licenseIds` if your IdP allows configuring one. This is set up in your configuration as opposed to a table somewhere. The specific implementation will depend your IdP, but below is an example in SimpleSAMLphp that may or may not be directly adaptable to your specific SAML IDP.
 
-:::tip
-[Please refer to our other SSO integration support for other approaches to this configuration.](./introduction#sso-support)
-:::
+<details className={'alert alert--secondary'}>
+<summary>A SimpleSAMLphp Example</summary>
 
-##### A SimpleSAMLphp example
 This is a potential solution to sending the required licenceId in the SAML payload without needing to adjust user records in SimplePHP.
 
 The recommended strategy is to use an "Auth Proc Filter" ([documentation here](https://simplesamlphp.org/docs/stable/simplesamlphp-authproc)).
 
 From those docs, modify `saml20-sp-remote.php` and in the existing 'authproc' => array section (add it missing), add static attributes using the core:AttributeAdd functionality like so:
+
+<Tabs>
+<TabItem value="basic" label="Basic Example" default>
+
+A basic example might look like:
 
 ```php title="saml20-sp-remote.php"
 'authproc' => array(
@@ -119,7 +138,10 @@ From those docs, modify `saml20-sp-remote.php` and in the existing 'authproc' =>
     'class' => 'core:AttributeAdd',
     'LICENSE_ID_NAME_HERE' => array('ACTUAL_LICENSE_ID_HERE')
   ),
-```
+  ```
+
+</TabItem>
+<TabItem value="comprehensive" label="Comprehensive Example">
 
 A more comprehensive example might look like:
 
@@ -139,7 +161,16 @@ $metadata['https://example.com'] = array(
 );
 ```
 
-### 4. Learner Access Restrictions
+</TabItem>
+</Tabs>
+
+</details>
+
+:::tip
+[Please refer to our other SSO integration support for other approaches to this configuration.](../introduction#sso-support)
+:::
+
+### Learner Access Restrictions
 All access restrictions, or lack there of, are handled on the IdP side of things. So if applicable, make sure sufficent role permissions have been granted to the learners who'll need access to the IE platform before they need it.
 
 From IE's perspective, there's not much downside to providing access to all accounts in the IdP side (ie no restrictions) as learners who need access to the IE content may change, and any learners who no longer need access or who never needed it will typically avoid.

@@ -2,22 +2,29 @@
 sidebar_position: 1
 ---
 
-# Account Creation and Updates
+# Authentication and Accounts
 
-Once SSO has been successfully implemented, learners will access the IE platform and their designated content by:
+## Logging in to the IE Platform
+Once SSO has been successfully configured, learners will access the IE platform and their designated content by:
 
-1. Clicking a link (provided by IE) in an email, website, dashboard, or application. This starts the SSO process.
-2. They'll be redirected to your authentication system to authenticate using the credentials they've been given for your platform.
-3. After authentication is successful, they are then redirected to the IE platform to access their designated content.
+1. Clicking the login link (typically provided by IE) in an email, website, dashboard, or application. This starts the SSO process.
+2. The learner will be redirected to your authentication system to login using the credentials they've been given for your platform.
+3. After authentication is successful, the learner is automatically redirected to the IE platform to access their pre-designated IE content.
 
-In the background via the SSO protocol spec, the IdP will pass necessary account details to the SP making all account creation / updates seamless for the learner.
+## Account Creation and Updates
+When a learner is redirected back to IE from your authentication system, we receive the learner's account details from your system. If the learner already exists in our system, we update their account details with the information received from your system. If the learner does not exist in our system, we create a new account for them using the information received from your system. All of this happens automatically and behind the scenes and is invisible to the learner making for a seamless experience.
 
-There is no need to send us a pre-determined list of learner details to pre-populate your IE client with learner accounts. All accounts are created and updated dynamically upon login using details passed during SSO mentioned above.
+:::note
+**There is no need to send us a pre-determined list of learner details** to populate your IE client with learner accounts – all accounts are created and updated dynamically upon authentication using details passed during SSO as mentioned above.
+:::
 
-Because of this, all learners who need access to the IE content, must already exist in your system in some form. Typically this means their first name, last name and email address is stored. If these aren't available to be sent, then often our native registration (as opposed to SSO) is the better choice. At minimum, a unique ID is required, and any missing user details (first name, last name, and email) will be requested of the learner upon first access.
+## Requirements
 
-It's typically ideal to avoid this manual (non-automated) request for learner details to ensure data integrity (ie avoid human error), but can be a good enough solution in some circumstances.
+### Learners must already exist in the IdP
+Because of this dynamic account creation, **all learners who need access to the IE content, must already exist in your system in some form**. At best, this means they have accounts with first name, last name and email address, as these values are taken for account creation on our end. At minimum, a unique ID is required.
+
+Any missing user details (first name, last name, and email) will be requested from the learner directly upon first authentication. It's typically ideal to avoid this manual (non-automated) request for learner details though to ensure data integrity (ie avoid human error), but it can be a good-enough solution for some circumstances.
 
 :::note Things to consider
-Do all users who need access to our content have access to authenticate in your IDP? What details are available on your end to send for learners?
+If first name, last name and email address aren't available to be sent from your IdP, have you considered if SSO is the right choice for you, as opposed to native registration?
 :::

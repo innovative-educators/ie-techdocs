@@ -1,9 +1,9 @@
 {
-  "label": "Data Integrations",
+  "label": "Configuring SAML",
   "position": 3,
   "collapsible": true,
   "link": {
     "type": "doc",
-    "id": "introduction"
+    "id": "saml2"
   }
 }

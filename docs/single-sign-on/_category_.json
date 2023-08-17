@@ -1,7 +1,7 @@
 {
   "label": "Single Sign On (SSO)",
   "position": 2,
-  "collapsible": false,
+  "collapsible": true,
   "link": {
     "type": "doc",
     "id": "introduction"

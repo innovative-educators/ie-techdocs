@@ -1,0 +1,9 @@
+{
+  "label": "Configuring CAS",
+  "position": 4,
+  "collapsible": true,
+  "link": {
+    "type": "doc",
+    "id": "cas"
+  }
+}

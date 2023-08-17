@@ -1,4 +1,4 @@
-1. **Have a running Identity Provider (IdP)** that supports SAML SSO protocols to integrate with IE as the Service Provider (SP). [See docs for some specific IDPs here](./introduction#sso-support).
+1. **Have a running Identity Provider (IdP)** that supports SAML SSO protocols to integrate with IE as the Service Provider (SP). [See docs for some specific IDPs here](../introduction#sso-support).
 
 2. **[Share your IdP Details](#configuring-the-sp)** with your IE representative so they can configure your client. Typically these are shared via the <span style={{ whiteSpace: 'nowrap' }}>`IdP metadata XML file`</span>.
 
@@ -9,5 +9,5 @@
 5. **[Share your SP Redirect URLs](#redirects)** for a better user experience. With SSO enabled and accounts controlled by the IDP, learners have no need for the SP `Logout` or `Account` pages anymore. These pages will require redirection to equivalent pages in your system, so share redirect URLs with IE to configure.
 
 :::caution Please Note
-Changing your SSO configuration for a client with **existing learners** comes with some additional challenges. [See details here](./existing-learners).
+Changing your SSO configuration for a client with **existing learners** comes with some additional challenges. [See details here](../existing-learners).
 :::
