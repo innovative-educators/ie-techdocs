@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { ClientUrl, ClientUrlDetailsForm } from '../../../src/components/client-url.js'
 import ExternalCustomerId from '../_external-customer-id.md'
 import AccountRedirectUrls from '../_redirect-urls.md'
 import ImplementationOverview from './_implementation-overview.md'
@@ -14,9 +15,16 @@ import ImplementationOverview from './_implementation-overview.md'
 For clarification on terms in these docs, please refer to the [Definition of Terms](../../definition-of-terms) page
 :::
 
+<ClientUrlDetailsForm />
+<ClientUrl path="https//<product-domain>/access/saml/login/<client-slug>?returnTo=<return-to-path>" />
+
 ## Introduction
 
 In many cases the SAML 2.0 configuration for the SP requires only a few key pieces of information to set up basic authentication. The IdP may require more in-depth configuration in order to meet the needs of your integration (e.g. Attribute mappings, encrypted assertions, etc).  You will need to refer to your IdP documentation for any advanced configuration. Because this configuration can differ from IdP to IdP, we are unable to provide specific instructions for every IdP.
+
+:::tip
+We have additional documentation for some of the more common IdPs as well. When you've finished reading this article, you may want to check there for more specific instructions. [See the list of supported IdPs here](../introduction#sso-support).
+:::
 
 ## Implementation Overview
 
