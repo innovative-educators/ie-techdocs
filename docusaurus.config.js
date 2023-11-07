@@ -9,7 +9,7 @@ const darkCodeTheme = themes.dracula;
 const config = {
   title: 'IE Docs',
   tagline: 'Welcome to the Innovative Educators documentation site',
-  url: 'https://docs.innovativeeducators.org',
+  url: 'https://techdocs.innovativeeducators.org',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -19,7 +19,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'innovative-educators', // Usually your GitHub org/user name.
-  projectName: 'ie-docs', // Usually your repo name.
+  projectName: 'ie-techdocs', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
