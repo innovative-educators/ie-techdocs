@@ -10,6 +10,10 @@
 
 6. **[Share your SP Redirect URLs](#redirects)** for a better user experience. With SSO enabled and accounts controlled by the IDP, learners have no need for the SP `Logout` or `Account` pages anymore. These pages will require redirection to equivalent pages in your system, so share redirect URLs with IE to configure.
 
-:::caution Please Note
+:::caution Have Existing Learners?
 Changing your SSO configuration for a client with **existing learners** comes with some additional challenges. [See details here](../existing-learners).
+:::
+
+:::caution Using a Federated IdP?
+Using a federated Identity Provider (district level, 3rd party etc) comes with some additional considerations. [See details here](../federated-idp).
 :::
