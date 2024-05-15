@@ -6,7 +6,7 @@
 
 4. **[Test Authentication](#testing)** making configuration adjustments as needed. This entails you attempt logging in via SSO (Login URL provided by IE as needed) and your IE rep will consult the SP logs and make / suggest changes if required.
 
-5. **[Share your SP Redirect URLs](#redirects)** for a better user experience. With SSO enabled and accounts controlled by the IDP, learners have no need for the SP `Logout` or `Account` pages anymore. These pages will require redirection to equivalent pages in your system, so share redirect URLs with IE to configure.
+5. **[Share your SP Redirect URLs](#redirect-urls)** for a better user experience. With SSO enabled and accounts controlled by the IDP, learners have no need for the SP `Logout` or `Account` pages anymore. These pages will require redirection to equivalent pages in your system, so share redirect URLs with IE to configure.
 
 :::caution Have Existing Learners?
 Changing your SSO configuration for a client with **existing learners** comes with some additional challenges. [See details here](../existing-learners).

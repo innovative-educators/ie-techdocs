@@ -5,7 +5,7 @@ sidebar_position: 7
 import ImplementationOverview from './_implementation-overview.md'
 import BuildingALoginUrl from './_building-a-login-url.md'
 import ExternalCustomerId from '../_external-customer-id.md'
-import AccountRedirectUrls from '../configuring-saml/_account-redirect-urls.md'
+import AccountRedirectUrls from '../_redirect-urls.md'
 
 # Configuring CAS (2.0 / 3.0)
 
@@ -106,7 +106,10 @@ To test, simply
 1. **Authenticate** from an incognito browser, using the SP login URL to authenticate into the IE platform through SSO.
 2. **Notify your IE representative** Once notified, IE will consult the SSO logs and verify the correct user details are being sent over.
 
+## Share your SP Redirect URLs {#redirect-urls}
+<AccountRedirectUrls />
+
 ## Troubleshooting {#troubleshooting}
 If authenitcation was successful, you should be redirected to the IE platform and logged in. If you are not logged in, and are still located on the IdP side, there's most likely an issue with the configuration on the IdP side.
 
-If on the other hand you are seeing an error, notify your IE representative for next steps. Please include any error messages you see, as well as the page URL you are on.
+If on the other hand you are seeing an error, notify your IE representative for next steps. Please include any error messages you see, as well as the page URL used to authenticate and the page URL of the error.
