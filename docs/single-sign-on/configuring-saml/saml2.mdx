@@ -47,7 +47,7 @@ Please provide your IE representative the following, so they can configure your 
   If you have access to your instance settings (not common), options are configurable under the SAML 2.0 section under Single Sign-on.
   ::: */}
 
-2. `Account Redirect URLs` Once SSO is configured, there is no need for the Login/Logout/Register/Account pages on the SP side anymore. IE will redirect the Login/Register pages to your new SSO link, but the **Account Logout** and **Account Details** pages need an equivalent or relevant page on the IdP side to redirect to.
+2. `Account Redirect URLs` With SSO enabled for your client, learners will have no need for the Login, Register or Account pages on the SP side. These pages should be redirected to relevant pages on the IdP side. Please provide the following types of redirect URLs to your IE representative to configure.
 
   <AccountRedirectUrls />
 
@@ -203,9 +203,6 @@ It's important to test the authentication flow before going live. This will ensu
 To test, simply
 1. **Authenticate** from an incognito browser, using the SP login URL to authenticate into the IE platform through SSO.
 2. **Notify your IE representative** Once notified, IE will consult the SSO logs and verify the correct user details are being sent over.
-
-## Share your SP Redirect URLs {#redirect-urls}
-<AccountRedirectUrls />
 
 ## Troubleshooting {#troubleshooting}
 If authenitcation was successful, you should be redirected to the IE platform and logged in. If you are not logged in, and are still located on the IdP side, there's most likely an issue with the configuration on the IdP side.

@@ -1,5 +1,3 @@
-With SSO enabled for your client, learners will have no need for the Login, Register or Account pages on the SP side. These pages should be redirected to relevant pages on the IdP side. Please provide the following types of redirect URLs to your IE representative to configure.
-
 <details className={'alert alert--secondary'}>
   <summary>Account Details URL (required)</summary>
 
