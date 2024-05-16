@@ -21,7 +21,7 @@ In many cases the CAS configuration for the SP requires only a few key pieces of
 
 <ImplementationOverview />
 
-## Configuring your SP client {#configuring-the-sp}
+## Service Provider Configuration {#configuring-the-sp}
 
 ### What IE needs from you
 
@@ -43,7 +43,7 @@ Please provide your IE representative the following, so they can configure your 
 
 3. `Date to begin enforcing SSO` Once SSO is complete, when would you like to turn off (redirect) native registration. This is mostly relevant for clients who already have learners utilizing native registration. If you don't have any learners using native registration, this redirect can be configured immediately.
 
-## Configuring your IdP server {#configuring-the-idp}
+## Identity Provider Configuration {#configuring-the-idp}
 
 ### Configure the externalCustomerID {#external-customer-id}
 The `cas:user` is the unique ID that will identify CAS users coming from the IdP. This value is stored internally as `externalCustomerId`, and when a learner authenticates, it is used to determine whether to connect them to their pre-existing account or provision them a new one, if this is the learner's first time authenticating. The attributes passed by the IdP will be used to create the new account, or if connecting to a pre-existing account, the attributes passed by the IdP will be used to update it.
