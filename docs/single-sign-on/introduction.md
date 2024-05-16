@@ -38,10 +38,10 @@ If first name, last name and email address aren't available to be sent from your
 ## What type of SSO do we support? {#sso-support}
 
 - [SAML 2.0](./configuring-saml/saml2)
-  {/* - [with Azure](./configuring-saml/azure)
-  - [with ADFS](./configuring-saml/adfs)
-  - [with Shibboleth](./configuring-saml/shibboleth)
-  - [with PortalGuard](./configuring-saml/portalguard) */}
+  - [with Azure](./configuring-saml/azure)
+  {/* - [with ADFS](./configuring-saml/adfs) */}
+  {/* - [with Shibboleth](./configuring-saml/shibboleth) */}
+  {/* - [with PortalGuard](./configuring-saml/portalguard) */}
 - [CAS protocol 2.0 and 3.0](./configuring-cas/cas)
 
 :::note

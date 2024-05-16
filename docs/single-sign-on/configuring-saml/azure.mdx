@@ -1,81 +1,96 @@
 ---
 sidebar_position: 3
 sidebar_label: "with Azure"
-draft: true
 ---
+
+export const Image = ({ src, alt, ...rest }) => {
+  return <img src={src} alt={alt} style={{
+    'max-height': '300px',
+    'padding-left': 30
+  }} {...rest} />
+};
 
 # SAML with Azure
 
 :::info This is a Supplementry Guide
-This guide supplements the [Configuring your IdP server](./saml2#configuring-the-idp) portion of the [Configuring SAML 2.0](./saml2) docs using Azure as your identity provider (IdP). Please ensure you've already read and understand the concepts in the [Configuring SAML 2.0](./saml2) documentation before continuing.
+This supplements the [Configuring your IdP server](./saml2#configuring-the-idp) portion of the [Configuring SAML 2.0](./saml2) docs using Azure as your identity provider (IdP). Please ensure you've already read and understand the concepts in the [Configuring SAML 2.0](./saml2) documentation before continuing.
 :::
 
 :::note Do you already have an Azure account?
-This guide assumes you have already configured your Azure account and have access to the Azure portal. If you have not, please refer to the [Azure documentation](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tutorial-list).
+This guide assumes you have already configured your Azure account and have access to the Azure portal.
 :::
 
-### Enable single sign-on for an app
-To set up single sign-on for an application:
-1. In the Azure AD portal, select Enterprise applications. Then, click Create your Own Application
-2. Give it a name and then select the "integrate any other application..." option and create
-3. In the Manage section, select Single sign-on to open the Single sign-on pane for editing.
+This is a brief guide to the general steps you'll need to take to configure your Azure AD application to integrate with the Innovative Educators SAML 2.0 SP. Please see the [Azure Docs for SAML Claim Customization](https://learn.microsoft.com/en-us/entra/identity-platform/saml-claims-customization) if you require more details.
 
-### Upload the SP (IE) Metadata File
+## Setup SSO for an Azure AD application
 
-![](https://lh4.googleusercontent.com/nzv9jt5cu1SA0vGd3NXPsD0FO0iQU31nuMVVwes4pvdsampoOIJLwXiaYnUcQ45DSgFoMimEJv2yeyUDwZ0vlwj0dvYFxJCzI02txQiOHyQ-6dsPk7I7OcYWShNV4SNMHw=w1280)
+### Create the application
+1. In the Azure AD portal, select Enterprise applications. Then, click Create your Own Application.
+2. Give it a name and then select the "integrate any other application..." option and create.
 
-Upload the metadata file you received from IE and this will auto populate most of the SAML configuration that you'll need.
+### Configure the application
+1. In the Manage section of the application, select Single sign-on to open the Single sign-on pane for editing.
+2. Upload the metadata file you received from IE. This will auto populate most of the SAML configuration that you'll need.
+
+<Image src="/img/saml_azure_1.png" alt="Upload the SP (IE) Metadata File" />
+{/* ![Upload the SP (IE) Metadata File](/img/saml_azure_1.png) */}
+
 :::note
-If uploading an XLM file (instead of utilizing a live hosted URL), remove the validUntil property and value.
+If uploading an XLM file (instead of utilizing a live hosted URL) like the screenshot above, we recommend removing the `validUntil property and value` to avoid any potential issues that may arise from an IdP acting on the expiration date of the metadata file.
 :::
 
-![](https://lh5.googleusercontent.com/jiJCdk8e_9SrzxkYA1j9DTZAY_Qpk8uup3AmeT3dXlZZkM2VETQe5Es6i0cYv9Ob_gLaZrFIkjvRdCybk1VD3Ock6q_ovJA3PX3SLAymDzI0d8Xx=w1280)
-
-**Azure Docs for SAML Claim Customization:** [https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-saml-claims-customization](https://www.google.com/url?q=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fazure%2Factive-directory%2Fdevelop%2Factive-directory-saml-claims-customization&sa=D&sntz=1&usg=AOvVaw3zKihiR2Wd5b37eo2bUewL)
-
-### Edit/Add User Attributes and Claims
-This is how Azure will know what to send along with the User authentication via SAML
+### Working with attribute and claims
 
 :::info important
 Please refer to the [SAML 2.0 documentation](./saml2#configure-attributes) for requirements and recommendations regarding attributes and claims.
 :::
 
-#### How to Add a New Claim:
-1.  Click "Add New Claim" to bring up the manage claim dialog.
-2.  Give the claim an identifying name
-3.  Namespace can be the attribute name, otherwise we're able to match whatever namespace you enter here.
-4.  Source should be Attribute.
-5.  Source attribute is the key matching the user value you'd like to include.
+This is how Azure will know what to send along with the User authentication via SAML
 
-![](https://lh5.googleusercontent.com/LUsbk1dPjkNAQB1XD2L4r0lpphVsmn19e6HUdwPj0flz5SdDOlc128srQ_QN0_v_aMu0KJpVsb3BxXdWF_GFPos7zUOnbU7bkeuGAp6F_eKZn7Pr=w1280)
+#### To edit a claim
+Simpley click on the pencil icon next to the claim you want to edit.
 
-#### Add licenseId as a Claim (Static Attribute)
-1.  Perform the same steps as above say for the last one
-2.  In the Source Attribute field, add the license Id (provided by IE) in plain text instead of matching an already defined attribute key. You'll know it's a static value if Azure surrounds it in quotes.
+#### To add a new claim
+1. Click `Add New Claim` to bring up the manage claim dialog.
+2. Give the claim an identifying `name`
+3. `Namespace` can be the attribute name (the key for the value passed to the SP). We're able to match whatever namespace pass passed on the SP side.
+4. `Source` should be attribute.
+5. `Source attribute` is the key matching the user value you'd like to include.
 
-### Configuring the NameId (Name Identifier)
-The Name Identifier is the unique ID that will identify SAML users coming from the IdP (identity provider).
+<Image src="/img/saml_azure_2.png" alt="Add a New Claim" />
+{/* ![Add a New Claim](/img/saml_azure_2.png) */}
+
+#### To add a claim as a static attribute (e.g. licenseId)
+2. In the `Source Attribute` field, add the licenseId (provided by IE) in plain text, instead of matching an already defined attribute key. You'll know it's a static value if Azure surrounds it in quotes.
+
+### Configure the NameId
 
 :::info Important
 [Please refer to the SAML 2.0 documentation for requirements and recommendations regarding the NameID](./saml2#external-customer-id).
 :::
 
-**In Azure, the NAME_ID attribute/claim looks like this:**
+The Name Identifier is the unique ID that will identify SAML users coming from the IdP (identity provider). To edit it in Azure, click the pencil icon next to the claim.
 
-![](https://lh6.googleusercontent.com/uZhhow_mK6K6vgi1Jei_H7xc13lRL_56ojoXHLF87GKjRNyiq4cPkoI3mOy-R-rwzmgauyk4qBgnxESCNkcBHDAzJctiOV641bOcmtVdc3JAf1Yk=w1280)
+<Image src="/img/saml_azure_3.png" alt="Configuring the NameId (Name Identifier)" />
+{/* <figure style={{ backgroundColor: 'silver', padding: '1rem', borderRadius: '0.5rem' }}>
+<Image src="/img/saml_azure_3.png" alt="Configuring the NameId (Name Identifier)" />
+<figcaption>This is what the NameId will look like in Azure</figcaption>
+</figure> */}
+{/* ![Configuring the NameId (Name Identifier)](/img/saml_azure_3.png) */}
 
-#### Making the NameID unique
+#### Recommended way to make the NameID unique
 
-1. Start by editing the Name Identifier Value attribute and changing the **source** to **Transformation** by selecting the radio button
+1. From the claim editor, change the `source` property to `Transformation` by selecting the radio button
 
-![](https://lh4.googleusercontent.com/aBACTNE7EOKdzhq7TwlMnngvvHg66fmKgFlat40ksy3yQOMUx2lstlCwmPStNAFIfm-JmuSc9WgymWrDslwRh29ECC6Bix0tFkKlSyznw9vklVQBLNfS-5Ysfv6pOXffNQ=w1280)
+<Image src="/img/saml_azure_4.png" alt="Making the NameID unique" />
+{/* ![Making the NameID unique](/img/saml_azure_4.png) */}
 
-2. Then set the **Transformation** to **Join()**, the **Parameter 1** to the **unique-to-your-institution ID**, and **Parameter 2** to the static value of the **@ symbol** and your **domain name** like below.
+2. Then change the following perameters:
+- `Transformation` to `Join()`
+- `Parameter 1` to the attribute matching a **unique-to-your-institution learner ID**
+- `Parameter 2` to the static value of the **@ + your domain name** like the example screenshot below. Azure will put your string in quotes (like the licenseId above) if it recognizes your input as a static value.
 
-:::note
-Azure will put your string in quotes (like the licenseId above) if it recognizes your input as a static value.
-:::
-
-![](https://lh3.googleusercontent.com/latRLZhe2DGgPAczRk3ZHamU34tR1Sk0U4qpjiIQAZwBu1C-IC8fyhugMRk-wZc2JVkeXu7K8ml55KflMlF7fPsJdv74h9ugF67jOnZNgXf9wXZIWwy5swQBJo-KvJDDBw=w1280)
+<Image src="/img/saml_azure_5.png" alt="Join Transformation" width="600" />
+{/* ![Join Transformation](/img/saml_azure_5.png) */}
 
 3. Then click save and you're all set!
