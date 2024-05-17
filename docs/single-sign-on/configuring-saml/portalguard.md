@@ -1,7 +1,6 @@
 ---
 sidebar_position: 5
 sidebar_label: 'with PortalGuard'
-draft: false
 ---
 
 import { Grid } from '../../../src/components/Grid'
@@ -14,7 +13,7 @@ This supplements the [Configuring your IdP server](./saml2#configuring-the-idp) 
 
 PortalGuard has support for SAML 2 integrations. Integrating PortalGuard with IE's applications requires configuration in PortalGuard and also in the specific IE application that is being used. If more than one IE application is being used, then the integration needs to be completed for each application.
 
-## Configuring the SAML IdP
+## Configure the SAML IdP
 
 PortalGuard will be acting as the SAML identity provider (IdP). To configure a PortalGuard Relying Party Trust, some information from the IE application is needed.
 
