@@ -1,8 +1,9 @@
 ---
 sidebar_position: 4
 sidebar_label: "with ADFS"
-draft: true
 ---
+
+import { Grid } from '../../../src/components/Grid'
 
 # SAML with ADFS
 
@@ -16,7 +17,7 @@ This guide assumes you have already configured your ADFS account and have access
 
 Microsoft Active Directory Federation Services (ADFS) has had support for SAML 2 integrations since ADFS v2.0. Integrating ADFS with IE's applications requires configuration in ADFS and also in the specific IE application that is being used. If more than one IE's application is being used, then the integration needs to be completed for each application.
 
-### Configuring the SAML IdP (ADFS)
+## Configure the SAML IdP
 
 In this scenario, ADFS will be acting as the SAML identity provider (IdP). To configure an ADFS Relying Party Trust (ADFS's term for a service provider), you'll need the SP (service provider) metadata from IE.
 
@@ -25,11 +26,11 @@ In this scenario, ADFS will be acting as the SAML identity provider (IdP). To co
 To complete the IdP configuration, in ADFS we need to make ADFS aware of the relying party:
 
 1. Navigate to the Relying Party Trust node.
-2. Click *Add Relying Party Trust...* in the *Actions* pane.
-3. If you are prompted about the application is "Claims aware" or not, choose *Claims aware*.
-4. In the Select Data Source step, select the *Import data about the relying party from a field* radio button, *Browse...* to the metadata file provided by IE, and click *Next*.
-5. On the next step, enter a desired name into *Display Name*. This is a free form field, but it is recommended to enter the Innovative Educator's application name.
-6. If prompted about an access control policy, choose *Permit everyone*, unless you have a reason to choose something else.
+2. Click `Add Relying Party Trust...` in the `Actions` pane.
+3. If you are prompted about the application is "Claims aware" or not, choose `Claims aware`.
+4. In the Select Data Source step, select the `Import data about the relying party from a field` radio button, Browse... to the metadata file provided by IE, and click `Next`.
+5. On the next step, enter a desired name into `Display Name`. This is a free form field, but it is recommended to enter the Innovative Educator's application name.
+6. If prompted about an access control policy, choose `Permit everyone`, unless you have a reason to choose something else.
 7. Finish up the wizard.
 
 ADFS now knows about IE's application.
@@ -42,80 +43,86 @@ Please refer to the [SAML 2.0 documentation](./saml2#configure-attributes) for r
 
 We need to instruct ADFS to send some information about the user to the SP.
 
-1. Select the newly create relying party trust, and select *Edit Claims Issuance Policy...* from the *Action* pane.
-2. From the *Edit Claim Issuance*... dialog, click *Add Rule...*
-3. Add *AD Attributes* attribute definition:
-    1. From the *Add Transform Claim Rule Wizard*, select *Send LDAP Attributes as Claims*, and click *Next*.
-    2. In the *Claim rule name* field, type **AD Attributes**.
-    3. In the Mapping of LDAP attributes to outgoing claim types, add the following entries:
-        1. Given-Name -> firstName
-        2. Surname -> lastName
-        3. E-Mail-Addresses -> email
-        4. Optional data to be associated with the user -> ref1
-        5. Optional data to be associated with the user -> ref2
-        6. Optional data to be associated with the user -> ref3
-    4. Click *Finish* to create the rule.
-    5. Add the *LicenseIds* attribute definition:
-        1. From the *Add Transform Claim Rule Wizard*, select *Send Claims Using a Custom Rule*, and click *Next*.
-        2. In the *Claim rule name* field, type **licenseIds**.
-        {/* 3. In the *Claim rule* field enter the following string: **=> issue(Type = "licenseIds", Value = "<licIds>");** */}
-        {/* 4. Replace the string, **<licIds>** with the value provided by Innovative Educators. */}
-        5. Click *Finish* to create the rule.
+1. Select the newly create relying party trust, and select `Edit Claims Issuance Policy...` from the `Action` pane.
+2. From the `Edit Claim Issuance`... dialog, click `Add Rule...`
+3. Add `AD Attributes` attribute definition:
+    - From the `Add Transform Claim Rule Wizard`, select `Send LDAP Attributes as Claims`, and click `Next`.
+    - In the `Claim rule name` field, type "AD Attributes".
+    - In the Mapping of LDAP attributes to outgoing claim types, add the following entries:
+        - Given-Name -> firstName
+        - Surname -> lastName
+        - E-Mail-Addresses -> email
+        - Optional data to be associated with the user -> ref1
+        - Optional data to be associated with the user -> ref2
+        - Optional data to be associated with the user -> ref3
+    - Click `Finish` to create the rule.
+4. Add the `LicenseIds` attribute definition:
+    - From the `Add Transform Claim Rule Wizard`, select `Send Claims Using a Custom Rule`, and click `Next`.
+    - In the `Claim rule name` field, type "licenseIds".
+    - In the `Claim rule` field enter the following string:
+        ```
+        => issue(Type = "licenseIds", Value = "<licIds>");`
+        ```
+    - Replace the string, "\<licIds\>" with the value provided by Innovative Educators.
+    - Click `Finish` to create the rule.
 
-### Configuring the NameId (Name Identifier)
+#### Dialog Box Examples
+
+<Grid>
+<div>
+A populated *Add Transform Claim Rule Wizard* dialog for AD user attributes.
+![](/img/saml_adfs_1.png)
+</div>
+
+<div>
+A populated *Add Transform Claim Rule Wizard* dialog for licenseIds.
+![](/img/saml_adfs_2.png)
+</div>
+</Grid>
+
+### Configure the NameId
 The Name Identifier is the unique ID that will identify SAML users coming from the IdP (identity provider).
 
 :::info Important
 [Please refer to the SAML 2.0 documentation for requirements and recommendations regarding the NameID](./saml2#external-customer-id).
 :::
 
-### Using *sAMAccountName for NameID (optional)*
+#### Using *sAMAccountName for NameID (optional)*
 
-1. Add the *Get Stripped sAMAccountName* attribute definition:
+:::warning
+The following example has you irroniously strip the domain from the NameID and needs updating. Leaving here for reference until the example can be updated.
+:::
 
-    1. From the *Add Transform Claim Rule Wizard*, select *Send Claims Using a Custom Rule*, and click *Next*.
+1. Add "Get Stripped sAMAccountName" attribute definition:
+    - From the `Add Transform Claim Rule Wizard`, select `Send Claims Using a Custom Rule`, and click `Next`.
+    - In the `Claim rule name` field, type "Get Stripped sAMAccountName".
+    - In the `Claim rule` field enter the following string:
+        ```
+        c:[Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname", Issuer == "AD AUTHORITY"] => issue(store = "Active Directory", types = ("urn:strippedaccountname"), query = ";sAMAccountName;{0}", param = c.Value);
+        ```
+    - Click `Finish` to create the rule.
 
-    2. In the *Claim rule name* field, type **Get Stripped sAMAccountName**.
+2. Add the "Transform Stripped sAMAccountName to Name ID" attribute definition (ensure that this entry is ordered after the 'Get Stripped sAMAccountName" attribute definition):
+    - From the `Add Transform Claim Rule Wizard`, select `Send Claims Using a Custom Rule`, and click `Next`.
+    - In the `Claim rule name` field, type `Transform Stripped sAMAccountName to Name ID`.
+    - In the `Claim rule` field enter the following string:
+        ```
+        c:[Type == "urn:strippedaccountname"] => issue(Type = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", Issuer = c.Issuer, OriginalIssuer = c.OriginalIssuer, Value = c.Value, ValueType = c.ValueType, Properties["http://schemas.xmlsoap.org/ws/2005/05/identity/claimproperties/format"] = "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified");
+        ```
+    - Click `Finish` to create the rule.
 
-    3. In the *Claim rule* field enter the following string: **c:[Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname", Issuer == "AD AUTHORITY"] => issue(store = "Active Directory", types = ("urn:strippedaccountname"), query = ";sAMAccountName;{0}", param = c.Value);**
+3. Click `OK` to close the `Edit Claim Issuance...` dialog.
 
-    4. Click *Finish* to create the rule.
-
-2. Add the *Transform Stripped sAMAccountName to Name ID* attribute definition (ensure that this entry is ordered after the *Get Stripped sAMAccountName* attribute definition):
-
-    1. From the *Add Transform Claim Rule Wizard*, select *Send Claims Using a Custom Rule*, and click *Next*.
-
-    2. In the *Claim rule name* field, type *Transform Stripped sAMAccountName to Name ID*.
-
-    3. In the *Claim rule* field enter the following string: **c:[Type == "urn:strippedaccountname"] => issue(Type = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", Issuer = c.Issuer, OriginalIssuer = c.OriginalIssuer, Value = c.Value, ValueType = c.ValueType, Properties["http://schemas.xmlsoap.org/ws/2005/05/identity/claimproperties/format"] = "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified");**
-
-    4. Click *Finish* to create the rule.
-
-3. Click OK to close the *Edit Claim Issuance*... dialog.
-
-### Dialog Box Examples
-
-<div style={{ display: 'flex', 'flex-wrap': 'wrap', gap: '20px' }} >
-<div style={{ width: 'calc(50% - 20px)' }} >
-
-A populated *Add Transform Claim Rule Wizard* dialog for AD user attributes.
-![](https://lh4.googleusercontent.com/k-0_GtO3DHaAQTEKkuxKaSAYMF1k6LRwqpW3QGZezieh6bs7LRTXDE4Sc-_XR8xn4FskFmMV72xuZPCvZQcC8VQUadDOXcMS4tuNMuJ65e4UPA44=w1280)
-
-</div>
-
-<div style={{ width: 'calc(50% - 20px)' }} >
-A populated *Add Transform Claim Rule Wizard* dialog for licenseIds.
-![](https://lh3.googleusercontent.com/1cSEv2FjAWXim52ETf-uKKUU_ZIZzIa2nxU28bJx2tFN3ePnk0oKhpU5t_nWzxAUZTcXvUJhKLZ-xet75J6lFGdQC9S4oZNL83ZTXVXFA7YeZtD3=w1280)
-</div>
-
-<div style={{ width: 'calc(50% - 20px)' }} >
+#### Dialog Box Examples
+<Grid>
+<div>
 A populated *Add Transform Claim Rule Wizard* dialog that strips the domain from the username.
-![](https://lh4.googleusercontent.com/Tndjy_DRK4Q9MlQQc69LN7Z3LwRmVS7a8Gtlh0IEYGGFyKa_D2AvCD0RrBgCB_IdcpE1QWLaAHt1aQyK7i_9dmQwBxvGBa-gdP0PX0OwyZ1zpNKL=w1280)
+![](/img/saml_adfs_3.png)
 </div>
 
-<div style={{ width: 'calc(50% - 20px)' }} >
+<div>
 A populated *Add Transform Claim Rule Wizard* dialog that sends the stripped username to the application.
-![](https://lh3.googleusercontent.com/73DF2DaRToEljSPZdJnCoKLYplhbjNDwS1FWVcXsI9euXv7BIDslJbvXx0uX4zpTGos0viNOAvTaLmXsku0npfcFQVjbEpg2Xsoj0D-gJRbXY-md=w1280)
+![](/img/saml_adfs_4.png)
 </div>
-
-</div>
+</Grid>
+#
