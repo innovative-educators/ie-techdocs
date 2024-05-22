@@ -39,9 +39,9 @@ If first name, last name and email address aren't available to be sent from your
 
 - [SAML 2.0](./configuring-saml/saml2)
   - [with Azure](./configuring-saml/azure)
-  {/* - [with ADFS](./configuring-saml/adfs) */}
-  {/* - [with Shibboleth](./configuring-saml/shibboleth) */}
-  {/* - [with PortalGuard](./configuring-saml/portalguard) */}
+  - [with ADFS](./configuring-saml/adfs)
+  - [with PortalGuard](./configuring-saml/portalguard)
+  - [with Shibboleth](./configuring-saml/shibboleth)
 - [CAS protocol 2.0 and 3.0](./configuring-cas/cas)
 
 :::note
