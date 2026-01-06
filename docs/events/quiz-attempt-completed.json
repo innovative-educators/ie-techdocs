@@ -1,0 +1,346 @@
+{
+  "id": "7f7cb9b4-7b2f-4a1a-9f1e-3a7d9e3c2f40",
+  "companyId": "9a8d6c35-2f4a-4f55-8e43-18b3cdd2c6a1",
+  // highlight-next-line
+  "topic": "3d4c0f2e-1b7a-4e59-9d1f-6c2a8b7e5f92",
+  "topicType": "quiz",
+  // highlight-next-line
+  "topicTitle": "Quiz Name",
+  "timeElapsedInSeconds": 37,
+  // highlight-next-line
+  "user": "bobjohnson@school.edu",
+  // highlight-next-line
+  "passed": true,
+  // highlight-next-line
+  "grade": 100,
+  "timestamp": "2025-12-12T20:01:44.187Z",
+  "questions": [
+    {
+      "body": "<p>It is okay to use ChaptGPT to write my essay without citing it resource.</p>",
+      "type": "booleanChoice",
+      "table": null,
+      "choices": [
+        {
+          "asset": null,
+          "value": "True",
+          "points": null,
+          "altText": null,
+          "correct": false,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "False",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        }
+      ],
+      "preText": null,
+      "postText": null,
+      "preText2": null,
+      "required": false,
+      "response": null,
+      "postText2": null,
+      "questionId": "c2f9a8d1-6e44-4bce-9a6d-9b0c7d1e2f3a",
+      "placeholder": null,
+      "displayOption": null,
+      "tableResponse": {
+        "rows": [],
+        "headers": []
+      },
+      "parentQuestion": null,
+      "selectedChoice": {
+        "asset": null,
+        "value": "False",
+        "points": null,
+        "altText": null,
+        "correct": true,
+        "response": null
+      },
+      "additionalContent": null,
+      "openEndedResponse": null,
+      "preselectedChoices": [],
+      "fileSubmissionAsset": null,
+      "preTextDisplayOption": null,
+      "postTextDisplayOption": null,
+      "preTextDisplayOption2": null,
+      "postTextDisplayOption2": null,
+      "addAndDeleteRowsEnabled": false,
+      "copyAnswerFromQuestionId": null,
+      "copyAnswerFromAssessmentId": null,
+      "mustSelectAllCorrectChoices": false
+    },
+    {
+      "body": "<p>Which of the following are services provided by Campus Safety?</p>",
+      "type": "multipleChoice",
+      "table": null,
+      "choices": [
+        {
+          "asset": null,
+          "value": "Medical Emergencies",
+          "points": null,
+          "altText": null,
+          "correct": false,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Walking Escorts",
+          "points": null,
+          "altText": null,
+          "correct": false,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Safety Presentations",
+          "points": null,
+          "altText": null,
+          "correct": false,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Code of Conduct Violations",
+          "points": null,
+          "altText": null,
+          "correct": false,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "All of the Above",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        }
+      ],
+      "preText": null,
+      "postText": null,
+      "preText2": null,
+      "required": false,
+      "response": null,
+      "postText2": null,
+      "questionId": "5b8e1c3f-2a49-4d1e-8b6f-1a2d3c4e5f6a",
+      "placeholder": null,
+      "displayOption": null,
+      "tableResponse": {
+        "rows": [],
+        "headers": []
+      },
+      "parentQuestion": null,
+      "selectedChoice": {
+        "asset": null,
+        "value": "All of the Above",
+        "points": null,
+        "altText": null,
+        "correct": true,
+        "response": null
+      },
+      "additionalContent": null,
+      "openEndedResponse": null,
+      "preselectedChoices": [],
+      "fileSubmissionAsset": null,
+      "preTextDisplayOption": null,
+      "postTextDisplayOption": null,
+      "preTextDisplayOption2": null,
+      "postTextDisplayOption2": null,
+      "addAndDeleteRowsEnabled": false,
+      "copyAnswerFromQuestionId": null,
+      "copyAnswerFromAssessmentId": null,
+      "mustSelectAllCorrectChoices": false
+    },
+    {
+      "body": "<p>What items were most important to you? Did the information provided help you understand these items better? Why or why not?</p>",
+      "type": "openEnded",
+      "table": null,
+      "choices": [],
+      "preText": null,
+      "postText": null,
+      "preText2": null,
+      "required": false,
+      "response": null,
+      "postText2": null,
+      "questionId": "a1b2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+      "placeholder": null,
+      "displayOption": null,
+      "tableResponse": {
+        "rows": [],
+        "headers": []
+      },
+      "parentQuestion": null,
+      "selectedChoice": null,
+      "additionalContent": null,
+      "openEndedResponse": "The sections detailing the enrollment process, financial transactions, and student support services were the most integral to me.  The information provided was clear and concise.  I deeply appreciated the visual aids and supplementary links embedded in the presentations. The quizzes were a nice tool to gage audience understanding of presentation concepts.  Overall, I found this orientation course to be very effective.  Thank you to the team who put this course together. ",
+      "preselectedChoices": [],
+      "fileSubmissionAsset": null,
+      "preTextDisplayOption": null,
+      "postTextDisplayOption": null,
+      "preTextDisplayOption2": null,
+      "postTextDisplayOption2": null,
+      "addAndDeleteRowsEnabled": false,
+      "copyAnswerFromQuestionId": null,
+      "copyAnswerFromAssessmentId": null,
+      "mustSelectAllCorrectChoices": false
+    },
+    {
+      "body": "<p>Which of the following services would you like information about? (Select all that apply)</p>",
+      "type": "selectBoxes",
+      "table": null,
+      "choices": [
+        {
+          "asset": null,
+          "value": "Academic Coaching/Tutoring",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Disability Services",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Community Resources (e.g., housing, food share, social service agency information, or referrals)",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Extracurricular Activities (e.g., student organizations, student government, intramural athletics, etc.)",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Financial Coaching and Budgeting",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Personal Counseling (e.g., anxiety, depression, ADHD, etc.)",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Veterans' Services",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Computer Help Videos (using systems and common computer tasks)",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Help with Home Internet Access",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        },
+        {
+          "asset": null,
+          "value": "Career Services- Help Finding a job while in college",
+          "points": null,
+          "altText": null,
+          "correct": true,
+          "response": null,
+          "selected": false
+        }
+      ],
+      "preText": null,
+      "postText": null,
+      "preText2": null,
+      "required": true,
+      "response": null,
+      "postText2": null,
+      "questionId": "e7d6c5b4-a3f2-4e1d-9c8b-7a6f5e4d3c2b",
+      "placeholder": null,
+      "displayOption": null,
+      "tableResponse": {
+        "rows": [],
+        "headers": []
+      },
+      "parentQuestion": null,
+      "selectedChoice": null,
+      "additionalContent": null,
+      "openEndedResponse": "Help with Home Internet Access",
+      "preselectedChoices": [],
+      "fileSubmissionAsset": null,
+      "preTextDisplayOption": null,
+      "postTextDisplayOption": null,
+      "preTextDisplayOption2": null,
+      "postTextDisplayOption2": null,
+      "addAndDeleteRowsEnabled": false,
+      "copyAnswerFromQuestionId": null,
+      "copyAnswerFromAssessmentId": null,
+      "mustSelectAllCorrectChoices": false
+    }
+  ],
+  // highlight-next-line
+  "notifiableId": "4f3e2d1c-0b9a-4a8f-9e7d-6c5b4a3f2e1d",
+  "courseTitle": "New Student Orientation",
+  "courseSku": null,
+  "userDetail": {
+    "id": "d9c8b7a6-5e4d-4c3b-8a9f-0e1d2c3b4a5f",
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    "email": "bobjohnson@school.edu",
+    // highlight-next-line
+    "externalCustomerId": "studentid12345@school.edu",
+    "sfContactId": null,
+    "sfAccountId": null,
+    // highlight-next-line
+    "ref1": "StudentID12345",
+    "ref2": "Department?",
+    "ref3": "...",
+    "ref4": null,
+    "ref5": null,
+    "ref6": null,
+    "ref7": null,
+    "ref8": null,
+    "ref9": null,
+    "ref10": null
+  }
+}

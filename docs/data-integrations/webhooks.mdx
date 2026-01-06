@@ -7,6 +7,7 @@ import CodeBlock from '@theme/CodeBlock';
 import CourseCompletedExample from '!!raw-loader!../events/course-completed.json';
 import CourseCertificateIssuedExample from '!!raw-loader!../events/course-certificate-issued.json';
 import LearningPathCompletedExample from '!!raw-loader!../events/learning-path-completed.json';
+import QuizAttemptCompletedExample from '!!raw-loader!../events/quiz-attempt-completed.json';
 
 # Live Event Webhooks
 
@@ -94,6 +95,34 @@ When a learner completes a learning path
 
 ### Sample Payload
 <CodeBlock language="json">{LearningPathCompletedExample}</CodeBlock>
+</details>
+
+<details>
+<summary>Quiz Attempt Completed</summary>
+
+### Trigger
+When a learner submits a quiz
+
+### Notable Event Attributes
+
+| Attribute | Description |
+| --------- | ----------- |
+| `user` | The learner's email address |
+| `topic` | The ID of the quiz or assessment |
+| `topicTitle` | The title of the quiz |
+| `notifiableId` | The ID of the associated course (useful if your endpoint receives events for multiple courses) |
+| `passed` | Indicates whether the learner passed the quiz |
+| `grade` | Numeric score for the quiz |
+| `userDetail > externalCustomerId` | The learner's ID, used during SSO to associate the learner from the IDP with their account in the SP (IE product). |
+| `ref1 - ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
+
+### Sample Payload
+{/* TODO: Add other question types?
+ Image Comparison
+ File Submission
+ Essay */}
+
+<CodeBlock language="json">{QuizAttemptCompletedExample}</CodeBlock>
 </details>
 
 {/* <details>
