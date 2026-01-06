@@ -6,6 +6,9 @@ pagination_next: null
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+import SftpCourseCompletedJson from '!!raw-loader!../events/course_completed_sftp.json';
+import SftpCourseCompletedCsv from '!!raw-loader!../events/course_completed_sftp.csv';
 
 # Nightly SFTP Events
 
@@ -80,48 +83,14 @@ When a learner completes a course
   - **File Name Example:** `courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.json`
   - **Format Notes:** Data will be an array of events sent in batch nightly. In other words, the standard JSON event for `courseComplete`, but multiple of them grouped into an JSON array.
 
-  ```json title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.json"
-  [{
-    "id": "32ed16df-27cb-5f72-90ff-4eaf39346f86",
-    "source": "course_completed",
-    "timestamp": "2019-10-17T20:50:53.103Z",
-    "type": "status_change",
-    // highlight-next-line
-    "user": "bobjohnson@school.com", // learner email
-    "companyId": "3aabdfb8-3891-5011-ad35-8e2351c5fdaf",
-    "event": "courseCompletion",
-    // highlight-next-line
-    "notifiableId": "7670fdbe-15ed-504b-a680-d404fa4b0eb4", // course id
-    "title": "New Student Orientation", // course title
-    "userDetail": { // learner details
-      "id": "61149b2c-3f37-5032-be63-f5d984de10b6",
-      "firstName": "Bob",
-      "lastName": "Johnson",
-      // highlight-next-line
-      "externalCustomerId": "111222333444",
-      "sfContactId": null,
-      "sfAccountId": null,
-      "client": "00f928f4-8718-5043-9164-32398b165c60",
-      // highlight-next-line
-      "ref1": "111222333444",
-      "ref2": "Department",
-      "ref3": "..."
-    }
-  }, {
-    ...
-  }]
-  ```
+  <CodeBlock language="json" title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.json">{SftpCourseCompletedJson}</CodeBlock>
 
   </TabItem>
   <TabItem value="csv" label="CSV">
   - **File Name Example:** `courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.csv`
   - **Format Notes:** Data will be the past days events sent in batch nightly – one `courseComplete` event per row and a header row at the top.
 
-  ```csv showLineNumbers title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.csv"
-  id,source,timestamp,type,user,companyId,event,notifiableId,title,userDetail.id,userDetail.firstName,userDetail.lastName,userDetail.externalCustomerId,userDetail.sfContactId,userDetail.sfAccountId,userDetail.client,userDetail.ref1,userDetail.ref2,userDetail.ref3
-  32ed16df-27cb-5f72-90ff-4eaf39346f86,course_completed,2019-10-17T20:50:53.103Z,status_change,bobjohnson@school.com,3aabdfb8-3891-5011-ad35-8e2351c5fdaf,courseCompletion,7670fdbe-15ed-504b-a680-d404fa4b0eb4,New Student Orientation,61149b2c-3f37-5032-be63-f5d984de10b6,Bob,Johnson,111222333444,null,null,00f928f4-8718-5043-9164-32398b165c60,111222333444,Department
-  ...
-  ```
+  <CodeBlock language="csv" showLineNumbers title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.csv">{SftpCourseCompletedCsv}</CodeBlock>
   </TabItem>
 </Tabs>
 
