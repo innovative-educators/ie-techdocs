@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-11-13T16:26:44.600Z",
+  "id": "4f6d1a40-5f5b-4e88-b0d3-0f6e8d4c1a11",
+  "source": "learning_path_completed",
+  "type": "status_change",
+  // highlight-next-line
+  "user": "bobjohnson@school.edu",
+  "license": "9e6c0c5e-7a9b-4f54-9e1b-1c0ce6b3a2d8",
+  "updatedAt": "2025-11-13T16:26:44.600Z",
+  "createdAt": "2025-11-13T16:26:44.600Z",
+  "importId": null,
+  "deleted": false,
+  "dueDate": null,
+  "companyId": "d0c5d13b-94af-4746-987c-6b9c1b9d3f5e",
+  // highlight-next-line
+  "notifiableId": "f1c4b7e2-0b4e-4a4f-98cf-3ef6f72c6e4a",
+  "learningPathTitle": "School Orientation Path",
+  "learningPathSku": null,
+  "milestoneTitle": null,
+  "userDetail": {
+    "id": "e58d3ac9-6c41-4b7d-8e03-6a9e5b8cf9c2",
+    "shippingName": null,
+    "address1": null,
+    "address2": null,
+    "city": null,
+    "state": null,
+    "zipCode": null,
+    "country": null,
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    "email": "bobjohnson@school.edu",
+    // highlight-next-line
+    "externalCustomerId": "studentid12345@school.edu",
+    "sfContactId": null,
+    "sfAccountId": null,
+    // highlight-next-line
+    "ref1": "StudentID12345",
+    "ref2": null,
+    "ref3": null
+  }
+}

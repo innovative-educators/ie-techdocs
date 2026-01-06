@@ -1,0 +1,27 @@
+{
+  "id": "32ed16df-27cb-5f72-90ff-4eaf39346f86",
+  "source": "course_completed",
+  "timestamp": "2019-10-17T20:50:53.103Z",
+  "type": "status_change",
+  // highlight-next-line
+  "user": "bobjohnson@school.edu",
+  "companyId": "3aabdfb8-3891-5011-ad35-8e2351c5fdaf",
+  "event": "courseCompletion",
+  // highlight-next-line
+  "notifiableId": "7670fdbe-15ed-504b-a680-d404fa4b0eb4",
+  "title": "New Student Orientation",
+  "userDetail": {
+    "id": "61149b2c-3f37-5032-be63-f5d984de10b6",
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    // highlight-next-line
+    "externalCustomerId": "studentid12345@school.edu",
+    "sfContactId": null,
+    "sfAccountId": null,
+    "client": "00f928f4-8718-5043-9164-32398b165c60",
+    // highlight-next-line
+    "ref1": "StudentID12345",
+    "ref2": "Department?",
+    "ref3": "..."
+  }
+}
