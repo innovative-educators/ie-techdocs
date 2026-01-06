@@ -56,12 +56,12 @@ We need to instruct ADFS to send some information about the user to the SP.
         - Optional data to be associated with the user -> ref2
         - Optional data to be associated with the user -> ref3
     - Click `Finish` to create the rule.
-4. Add the `LicenseIds` attribute definition:
+4. Add the `studentLicenseIds` attribute definition:
     - From the `Add Transform Claim Rule Wizard`, select `Send Claims Using a Custom Rule`, and click `Next`.
-    - In the `Claim rule name` field, type "licenseIds".
+    - In the `Claim rule name` field, type "studentLicenseIds".
     - In the `Claim rule` field enter the following string:
         ```
-        => issue(Type = "licenseIds", Value = "<licIds>");`
+        => issue(Type = "studentLicenseIds", Value = "<licIds>");`
         ```
     - Replace the string, "\<licIds\>" with the value provided by Innovative Educators.
     - Click `Finish` to create the rule.
@@ -75,7 +75,7 @@ A populated *Add Transform Claim Rule Wizard* dialog for AD user attributes.
 </div>
 
 <div>
-A populated *Add Transform Claim Rule Wizard* dialog for licenseIds.
+A populated *Add Transform Claim Rule Wizard* dialog for studentLicenseIds.
 ![](/img/saml_adfs_2.png)
 </div>
 </Grid>

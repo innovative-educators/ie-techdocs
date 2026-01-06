@@ -76,20 +76,20 @@ Attributes from the authentication source, usually an ldap-based directory, need
 
 4. Adjust the `sourceAttributeID` value to whatever source attribute contains the user id that should be used by the service provider/application. Common examples are uid, sAMAccountName, employeeId, employeeNumber, etc.
 
-5. If a `licenseId` value is provided by IE, a custom attribute named "licenseIds" needs to be configured:
+5. If a `studentLicenseId` value is provided by IE, a custom attribute named "studentLicenseIds" needs to be configured:
 
 ```xml title="<IDP_HOME>/conf/attribute-resolver.xml"
-<AttributeDefinition xsi:type="Simple" id="licenseIds" sourceAttributeID="licenseIds">
+<AttributeDefinition xsi:type="Simple" id="studentLicenseIds" sourceAttributeID="studentLicenseIds">
   <resolver:Dependency ref="staticAttributes" />
-  <resolver:AttributeEncoder xsi:type="SAML2String" name="licenseIds" friendlyName="licenseIds" encodeType="false" />
+  <resolver:AttributeEncoder xsi:type="SAML2String" name="studentLicenseIds" friendlyName="studentLicenseIds" encodeType="false" />
 </AttributeDefinition>
 ```
 
-6. The licenseIds attribute relies on a static value being defined in a static DataConnector. This data connector should be declared near the bottom of the file next to the other data connector(s).
+6. The studentLicenseIds attribute relies on a static value being defined in a static DataConnector. This data connector should be declared near the bottom of the file next to the other data connector(s).
 
 ```xml title="<IDP_HOME>/conf/attribute-resolver.xml"
 <DataConnector id="staticAttributes" xsi:type="Static">
-  <Attribute id="licenseIds">
+  <Attribute id="studentLicenseIds">
     <Value><licId></Value>
   </Attribute>
 </DataConnector>
@@ -98,7 +98,7 @@ Attributes from the authentication source, usually an ldap-based directory, need
 7. Update the `<licId>` to the value that was provided.
 
 :::note
-This connector may already exists. If so, just add the licenseIds **Attribute** element to the existing **staticAttributes** **DataConnector** element.
+This connector may already exists. If so, just add the studentLicenseIds **Attribute** element to the existing **staticAttributes** **DataConnector** element.
 :::
 
 8. Save the file.
@@ -164,7 +164,7 @@ We need to instruct Shibboleth IdP to release attributes about the user:
   <AttributeRule attributeID="givenName">
     <PermitValueRule xsi:type="ANY" />
   </AttributeRule>
-  <AttributeRule attributeID="licenseIds">
+  <AttributeRule attributeID="studentLicenseIds">
     <PermitValueRule xsi:type="ANY" />
   </AttributeRule>
   <AttributeRule attributeID="mail">

@@ -60,8 +60,8 @@ Simpley click on the pencil icon next to the claim you want to edit.
 <Image src="/img/saml_azure_2.png" alt="Add a New Claim" />
 {/* ![Add a New Claim](/img/saml_azure_2.png) */}
 
-#### To add a claim as a static attribute (e.g. licenseId)
-2. In the `Source Attribute` field, add the licenseId (provided by IE) in plain text, instead of matching an already defined attribute key. You'll know it's a static value if Azure surrounds it in quotes.
+#### To add a claim as a static attribute (e.g. studentLicenseId)
+2. In the `Source Attribute` field, add the studentLicenseId (provided by IE) in plain text, instead of matching an already defined attribute key. You'll know it's a static value if Azure surrounds it in quotes.
 
 ### Configure the NameId
 
@@ -88,7 +88,7 @@ The Name Identifier is the unique ID that will identify SAML users coming from t
 2. Then change the following perameters:
 - `Transformation` to `Join()`
 - `Parameter 1` to the attribute matching a **unique-to-your-institution learner ID**
-- `Parameter 2` to the static value of the **@ + your domain name** like the example screenshot below. Azure will put your string in quotes (like the licenseId above) if it recognizes your input as a static value.
+- `Parameter 2` to the static value of the **@ + your domain name** like the example screenshot below. Azure will put your string in quotes (like the studentLicenseId above) if it recognizes your input as a static value.
 
 <Image src="/img/saml_azure_5.png" alt="Join Transformation" width="600" />
 {/* ![Join Transformation](/img/saml_azure_5.png) */}

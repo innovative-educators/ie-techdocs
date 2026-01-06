@@ -83,7 +83,7 @@ Generally you will need the following information which can be obtained for your
   If you have access to your instance settings (not common), they can be obtained from the SSO Settings page by clicking `Download SP Metadata`.
   ::: */}
 
-2. The `licenseId` for your specific IE client. (this is a static attribute that IE will provide that needs to be passed for each user).
+2. The `studentLicenseId` for your specific IE client. (this is a static attribute that IE will provide that needs to be passed for each user).
 
 ### Configure the externalCustomerID {#external-customer-id}
 The Name Identifier or `NAME_ID` is the unique ID that will identify SAML users coming from the IdP. This value is stored internally as `externalCustomerId`, and when a learner authenticates, it is used to determine whether to connect them to their pre-existing account or provision them a new one, if this is the learner's first time authenticating. The attributes passed by the IdP will be used to create the new account, or if connecting to a pre-existing account, the attributes passed by the IdP will be used to update it.
@@ -113,20 +113,20 @@ The following list of attributes are available for mapping to any attribute retu
 | `firstname` | string | The first name of the learner | Recommended |
 | `lastname` | string | The last name of the learner | Recommended |
 | `email` | string | The email address of the learner | Recommended |
-| `licenseIds` | string | One or more license IDs to associate the content with the learner. This is a single value that must be sent for all learners and is best configured as a **static attribute**.&nbsp;&nbsp;[See below for more detials](#licenseid-as-a-static-attribute). <br/><br/>\* licenseIds is requied except in a single client instance (not common) | Required* |
+| `studentLicenseIds` | string | One or more license IDs to associate the content with the learner. This is a single value that must be sent for all learners and is best configured as a **static attribute**.&nbsp;&nbsp;[See below for more detials](#studentlicenseid-as-a-static-attribute). <br/><br/>\* studentLicenseIds is requied except in a single client instance (not common) | Required* |
 | `ref1` | string | Data to be associated with the user in reports. examples: role, department, major, title, year, studentId | Optional |
 | `ref2` | string | Data to be associated with the user... | Optional |
 | `ref3` | string | Data to be associated with the user... | Optional |
 
-For learners that should be associated with a client (almost every case), you must include one or more licenseIds in the SAML attributes.
+For learners that should be associated with a client (almost every case), you must include one or more studentLicenseIds in the SAML attributes.
 
-#### LicenseId as a Static Attribute
-To avoid the need for an extra column for every user in your system, you can utilize a `static attribute` to send over the required `licenseIds` if your IdP allows configuring one. This is set up in your configuration as opposed to a table somewhere. The specific implementation will depend your IdP, but below is an example in SimpleSAMLphp that may or may not be directly adaptable to your specific SAML IDP.
+#### StudentLicenseId as a Static Attribute
+To avoid the need for an extra column for every user in your system, you can utilize a `static attribute` to send over the required `studentLicenseIds` if your IdP allows configuring one. This is set up in your configuration as opposed to a table somewhere. The specific implementation will depend your IdP, but below is an example in SimpleSAMLphp that may or may not be directly adaptable to your specific SAML IDP.
 
 <details className={'alert alert--secondary'}>
 <summary>A SimpleSAMLphp Example</summary>
 
-This is a potential solution to sending the required licenceId in the SAML payload without needing to adjust user records in SimplePHP.
+This is a potential solution to sending the required studentLicenseId in the SAML payload without needing to adjust user records in SimplePHP.
 
 The recommended strategy is to use an "Auth Proc Filter" ([documentation here](https://simplesamlphp.org/docs/stable/simplesamlphp-authproc)).
 
@@ -188,7 +188,7 @@ Logins with IE are SP-initiated SSO with SAML, meaning that the login flow begin
   - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/login/<client-slug>`
   - Your `<client-slug>` will be provided by IE. There will be none if you have your own instance (not common)
 
-- Once a user visits this page, they will be redirected to your IdP for authentication. After authentication is successful, the IdP will send the user back to IE platform with a SAML Response that includes any attributes per the configuration. The user will then be logged into thier SP client and will have access to the content that has been provisioned per the `licenseId` configured in their attributes.
+- Once a user visits this page, they will be redirected to your IdP for authentication. After authentication is successful, the IdP will send the user back to IE platform with a SAML Response that includes any attributes per the configuration. The user will then be logged into thier SP client and will have access to the content that has been provisioned per the `studentLicenseId` configured in their attributes.
 
 - Optionally, a `redirectTo` query parameter can be added to the login URL to redirect a learner after authentication
   - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/login/<client-slug>`**`?returnTo=<redirect-path>`**

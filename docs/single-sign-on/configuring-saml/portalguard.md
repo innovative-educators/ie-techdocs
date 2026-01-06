@@ -60,7 +60,7 @@ Please refer to the SAML 2.0 documentation for requirements and recommendations 
 | Attribute | Send As NameID? | Schema Type | Value Type | Direct Field -> Field Name | Direct Field -> Value Index | Required |
 | --------- | --------------- | ----------- | ---------- | ------------------------- | -------------------------- | -------- |
 | NameId    | checked         | (blank)     | String Field | (uid, sAMAaccountName or other identifying attribute) | 0 | Required  |
-| licenseIds| unchecked       | licenseIds  | Formatted String | licenseIds             | 0                          | Required*   |
+| studentLicenseIds| unchecked       | studentLicenseIds  | Formatted String | studentLicenseIds             | 0                          | Required*   |
 | firstname | unchecked       | firstname     | String Field | givenName                  | 0                          | Recommended |
 | lastname  | unchecked       | lastname    | String Field | sn                         | 0                          | Recommended |
 | email     | unchecked       | email       | String Field | email                      | 0                          | Recommended |
@@ -76,7 +76,7 @@ Please refer to the SAML 2.0 documentation for requirements and recommendations 
     The populated NameID attribute definition
 
     ![](/img/saml_portalguard_2.png)
-    The populated LicenseIds attribute
+    The populated studentLicenseIds attribute
 
     ![](/img/saml_portalguard_3.png)
     The IdP-Initiated tab
