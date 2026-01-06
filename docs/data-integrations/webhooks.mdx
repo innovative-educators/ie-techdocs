@@ -5,7 +5,6 @@ toc_max_heading_level: 2
 
 import CodeBlock from '@theme/CodeBlock';
 import CourseCompletedExample from '!!raw-loader!../events/course-completed.json';
-import CourseCertificateIssuedExample from '!!raw-loader!../events/course-certificate-issued.json';
 import LearningPathCompletedExample from '!!raw-loader!../events/learning-path-completed.json';
 import QuizAttemptCompletedExample from '!!raw-loader!../events/quiz-attempt-completed.json';
 
@@ -124,14 +123,3 @@ When a learner submits a quiz
 
 <CodeBlock language="json" showLineNumbers>{QuizAttemptCompletedExample}</CodeBlock>
 </details>
-
-{/* <details>
-<summary>**Course Certificate Issued(depreciated)**</summary>
-
-### Trigger
-When a course certificate should be issued
-
-### Sample Payload
-<CodeBlock language="json" showLineNumbers>{CourseCertificateIssuedExample}</CodeBlock>
-
-</details> */}
