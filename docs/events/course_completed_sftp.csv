@@ -1,3 +1,0 @@
-id,source,timestamp,type,user,companyId,event,notifiableId,title,userDetail.id,userDetail.firstName,userDetail.lastName,userDetail.externalCustomerId,userDetail.sfContactId,userDetail.sfAccountId,userDetail.client,userDetail.ref1,userDetail.ref2,userDetail.ref3
-32ed16df-27cb-5f72-90ff-4eaf39346f86,course_completed,2019-10-17T20:50:53.103Z,status_change,bobjohnson@school.com,3aabdfb8-3891-5011-ad35-8e2351c5fdaf,courseCompletion,7670fdbe-15ed-504b-a680-d404fa4b0eb4,New Student Orientation,61149b2c-3f37-5032-be63-f5d984de10b6,Bob,Johnson,111222333444,null,null,00f928f4-8718-5043-9164-32398b165c60,111222333444,Department
-...
