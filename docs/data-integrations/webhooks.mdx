@@ -3,6 +3,11 @@ sidebar_position: 1
 toc_max_heading_level: 2
 ---
 
+import CodeBlock from '@theme/CodeBlock';
+import CourseCompletedExample from '!!raw-loader!../events/course-completed.json';
+import CourseCertificateIssuedExample from '!!raw-loader!../events/course-certificate-issued.json';
+import LearningPathCompletedExample from '!!raw-loader!../events/learning-path-completed.json';
+
 # Live Event Webhooks
 
 ## What is a webhook?
@@ -53,11 +58,6 @@ For security reasons, you may want to limit requests to your endpoint to those c
 
 ## Event Details
 
-import CodeBlock from '@theme/CodeBlock';
-import CourseCompletedExample from '!!raw-loader!../events/course_completed.json';
-import CourseCertificateGrantedExample from '!!raw-loader!../events/course_certificate_granted.json';
-import LearningPathCompletedExample from '!!raw-loader!../events/learning_path_completed.json';
-
 <details>
 <summary>Course Completed</summary>
 
@@ -103,6 +103,6 @@ When a learner completes a learning path
 When a course certificate should be issued
 
 ### Sample Payload
-<CodeBlock language="json">{CourseCertificateGrantedExample}</CodeBlock>
+<CodeBlock language="json">{CourseCertificateIssuedExample}</CodeBlock>
 
 </details> */}

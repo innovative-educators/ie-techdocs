@@ -7,8 +7,8 @@ pagination_next: null
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import CodeBlock from '@theme/CodeBlock';
-import SftpCourseCompletedJson from '!!raw-loader!../events/course_completed.json';
-import SftpCourseCompletedCsv from '!!raw-loader!../events/course_completed.csv';
+import CourseCompletedJson from '!!raw-loader!../events/course-completed.json';
+import CourseCompletedCsv from '!!raw-loader!../events/course-completed.csv';
 
 # Nightly SFTP Events
 
@@ -83,14 +83,14 @@ When a learner completes a course (sent in batch nightly)
   - **File Name Example:** `courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.json`
   - **Format Notes:** Data will be an array of events sent in batch nightly. In other words, the standard JSON event for `courseComplete`, but multiple of them grouped into an JSON array.
 
-  <CodeBlock language="json" title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.json">[{SftpCourseCompletedJson}]</CodeBlock>
+  <CodeBlock language="json" title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.json">[{CourseCompletedJson}]</CodeBlock>
 
   </TabItem>
   <TabItem value="csv" label="CSV">
   - **File Name Example:** `courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.csv`
   - **Format Notes:** Data will be the past days events sent in batch nightly – one `courseComplete` event per row and a header row at the top.
 
-  <CodeBlock language="csv" showLineNumbers title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.csv">{SftpCourseCompletedCsv}
+  <CodeBlock language="csv" showLineNumbers title="courseCompletion-1589259213_2020-05-18T18-00-13-7vcph2i.csv">{CourseCompletedCsv}
   ...
   </CodeBlock>
   </TabItem>
