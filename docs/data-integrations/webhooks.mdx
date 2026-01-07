@@ -70,8 +70,8 @@ When a learner completes a course
 | --------- | ----------- |
 | `user` | The leaner's email address |
 | `notifiableId` | The ID of the course that was completed |
-| `userDetail > externalCustomerId` | The learner's ID, the value associated to their account. This value is utilized during SSO to associate the learner coming from the IDP with their account in the SP (IE product). |
-| `ref1 - ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
+| `userDetail.externalCustomerId` | The learner's ID, the value associated to their account. This value is utilized during SSO to associate the learner coming from the IDP with their account in the SP (IE product). |
+| `userDetail.ref1 … ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
 
 ### Sample Payload
 <CodeBlock language="json" showLineNumbers>{CourseCompletedExample}</CodeBlock>
@@ -96,8 +96,8 @@ Filter on attribute `source` ensuring it is `learning_path_completed` to ensure 
 | `user` | The leaner's email address |
 | `notifiableId` | The ID of the learning path that was completed |
 | `source` | The source of the event for this event. Make sure to filter to `learning_path_completed` |
-| `userDetail > externalCustomerId` | The learner's ID, the value associated to their account. This value is utilized during SSO to associate the learner coming from the IDP with their account in the SP (IE product). |
-| `ref1 - ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
+| `userDetail.externalCustomerId` | The learner's ID, the value associated to their account. This value is utilized during SSO to associate the learner coming from the IDP with their account in the SP (IE product). |
+| `userDetail.ref1 … ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
 
 ### Sample Payload
 <CodeBlock language="json" showLineNumbers>{LearningPathCompletedExample}</CodeBlock>
@@ -119,8 +119,9 @@ When a learner submits a quiz
 | `notifiableId` | The ID of the associated course (useful if your endpoint receives events for multiple courses) |
 | `passed` | Indicates whether the learner passed the quiz |
 | `grade` | Numeric score for the quiz |
-| `userDetail > externalCustomerId` | The learner's ID, used during SSO to associate the learner from the IDP with their account in the SP (IE product). |
-| `ref1 - ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
+| `userDetail.externalCustomerId` | The learner's ID, used during SSO to associate the learner from the IDP with their account in the SP (IE product). |
+| `questions[0].type` | The type of question answered. Examples values include: `booleanChoice`, `multipleChoice`, `openEnded`, `selectBoxes` |
+| `userDetail.ref1 … ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
 
 ### Sample Payload
 {/* TODO: Add other question types?

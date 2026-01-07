@@ -73,8 +73,8 @@ When a learner completes a course (sent in batch nightly)
 | --------- | ----------- |
 | `user` | The leaner's email address |
 | `notifiableId` | The ID of the course that was completed |
-| `userDetail > externalCustomerId` | The learner's ID, the value associated to their account. This value is utilized during SSO to associate the learner coming from the IDP with their account in the SP (IE product). |
-| `ref1 - ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
+| `userDetail.externalCustomerId` | The learner's ID, the value associated to their account. This value is utilized during SSO to associate the learner coming from the IDP with their account in the SP (IE product). |
+| `userDetail.ref1 … ref3` | Optional data passed from the IDP to the SP (IE product) during SSO can be found in these attributes. |
 
 ### Sample Payload
 <Tabs>

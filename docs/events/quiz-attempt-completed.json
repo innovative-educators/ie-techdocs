@@ -17,6 +17,7 @@
   "questions": [
     {
       "body": "<p>It is okay to use ChaptGPT to write my essay without citing it resource.</p>",
+      // highlight-next-line
       "type": "booleanChoice",
       "table": null,
       "choices": [
@@ -76,6 +77,7 @@
     },
     {
       "body": "<p>Which of the following are services provided by Campus Safety?</p>",
+      // highlight-next-line
       "type": "multipleChoice",
       "table": null,
       "choices": [
@@ -162,6 +164,7 @@
     },
     {
       "body": "<p>What items were most important to you? Did the information provided help you understand these items better? Why or why not?</p>",
+      // highlight-next-line
       "type": "openEnded",
       "table": null,
       "choices": [],
@@ -195,6 +198,7 @@
     },
     {
       "body": "<p>Which of the following services would you like information about? (Select all that apply)</p>",
+      // highlight-next-line
       "type": "selectBoxes",
       "table": null,
       "choices": [
