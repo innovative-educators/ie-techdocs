@@ -47,3 +47,6 @@ If first name, last name and email address aren't available to be sent from your
 :::note
 We can’t use LDAP as our primary protocol but it does work with the SSO solutions we support.
 :::
+
+## Moving from Self Registration to SSO?
+If you initially launched with self (native) registration and are now looking to move to SSO, see [Moving from Self-Registration to SSO](./native-to-sso)
