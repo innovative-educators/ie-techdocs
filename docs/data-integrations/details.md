@@ -1,4 +1,4 @@
-# Extra Data Integrations Details
+# FAQs
 
 This page contains additional details about our webhook and SFTP data integrations.
 
