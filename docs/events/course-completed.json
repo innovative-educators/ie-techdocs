@@ -1,10 +1,22 @@
 {
-  "id": "32ed16df-27cb-5f72-90ff-4eaf39346f86",
-  "source": "course_completed",
   "timestamp": "2019-10-17T20:50:53.103Z",
+  "id": "32ed16df-27cb-5f72-90ff-4eaf39346f86",
+  "license": "523eafb4-31f2-5ae2-a093-f9a32b6faab1",
+  "source": "course_completed",
   "type": "status_change",
+  "updatedAt": "2019-10-17T20:50:53.103Z",
   // highlight-next-line
   "user": "bobjohnson@school.edu",
+  "importId": null,
+  "generated": false,
+  "backupExportId": null,
+  "tableImportId": null,
+  "deleted": false,
+  "importedBy": null,
+  "imported": false,
+  "createdAt": "2019-10-17T20:50:53.103Z",
+  "courseKind": "courseGroup",
+  "dueDate": null,
   "companyId": "3aabdfb8-3891-5011-ad35-8e2351c5fdaf",
   "event": "courseCompletion",
   // highlight-next-line
@@ -22,6 +34,21 @@
     // highlight-next-line
     "ref1": "StudentID12345",
     "ref2": "Department?",
-    "ref3": "..."
+    "ref3": "...",
+    "ref4": null,
+    "ref5": null,
+    "ref6": null,
+    "ref7": null,
+    "ref8": null,
+    "ref9": null,
+    "ref10": null,
+    "shippingName": null,
+    "address1": null,
+    "address2": null,
+    "city": null,
+    "state": null,
+    "zipCode": null,
+    "telephone": null,
+    "country": null
   }
 }
