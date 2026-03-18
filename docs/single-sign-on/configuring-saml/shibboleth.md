@@ -22,7 +22,7 @@ The Shibboleth IdP needs to know about the service provider(s). To complete the 
 1. Copy the metadata file received from IE to `<IDP_HOME>/metadata/<somename>.xml`
 
 :::note
-If using an XLM file like this (instead of a live hosted URL), we recommend removing the validUntil property and value to avoid any potential issues that may arise from an IdP acting on the expiration date of the metadata file.
+If using an XML file like this (instead of a live hosted URL), we recommend removing the validUntil property and value to avoid any potential issues that may arise from an IdP acting on the expiration date of the metadata file.
 :::
 
 2. Navigate to and edit `<IDP_HOME>/conf/metadata-providers.xml`.

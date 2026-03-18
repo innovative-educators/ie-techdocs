@@ -28,7 +28,7 @@ In many cases the SAML 2.0 configuration for the SP requires only a few key piec
 
 Please provide your IE representative the following, so they can configure your SP client.
 
-1. `IdP XML Metadata file` This tends to be the easiest way to share the details required for SP configuration. If more convienient, you may provide these details individually instead.
+1. `IdP XML Metadata file` This tends to be the easiest way to share the details required for SP configuration. If more convenient, you may provide these details individually instead.
 
   <details className={'alert alert--secondary'}>
     <summary>Required IdP Metadata details</summary>
@@ -65,7 +65,7 @@ Generally you will need the following information which can be obtained for your
   <details className={'alert alert--secondary'}>
     <summary>Required SP Metadata details</summary>
 
-    The easiest way to get these details is directly from the SP Metadata XML file you received from IE. If more convienient, you can request these details individually:
+    The easiest way to get these details is directly from the SP Metadata XML file you received from IE. If more convenient, you can request these details individually:
 
     - **Assertion Consumer Service (ACS) URL (also called the Single Sign-on URL):** The endpoint that receives HTTP-POST bindings from the IdP. The ACS URL can be found within the TI SP Metadata. If you have to type it in manually, it will be:
       - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/consumer/<client-slug>`
@@ -113,7 +113,7 @@ The following list of attributes are available for mapping to any attribute retu
 | `firstname` | string | The first name of the learner | Recommended |
 | `lastname` | string | The last name of the learner | Recommended |
 | `email` | string | The email address of the learner | Recommended |
-| `studentLicenseIds` | string | One or more license IDs to associate the content with the learner. This is a single value that must be sent for all learners and is best configured as a **static attribute**.&nbsp;&nbsp;[See below for more detials](#studentlicenseid-as-a-static-attribute). <br/><br/>\* studentLicenseIds is requied except in a single client instance (not common) | Required* |
+| `studentLicenseIds` | string | One or more license IDs to associate the content with the learner. This is a single value that must be sent for all learners and is best configured as a **static attribute**.&nbsp;&nbsp;[See below for more details](#studentlicenseid-as-a-static-attribute). <br/><br/>\* studentLicenseIds is required except in a single client instance (not common) | Required* |
 | `ref1` | string | Data to be associated with the user in reports. examples: role, department, major, title, year, studentId | Optional |
 | `ref2` | string | Data to be associated with the user... | Optional |
 | `ref3` | string | Data to be associated with the user... | Optional |
@@ -121,16 +121,16 @@ The following list of attributes are available for mapping to any attribute retu
 For learners that should be associated with a client (almost every case), you must include one or more studentLicenseIds in the SAML attributes.
 
 #### StudentLicenseId as a Static Attribute
-To avoid the need for an extra column for every user in your system, you can utilize a `static attribute` to send over the required `studentLicenseIds` if your IdP allows configuring one. This is set up in your configuration as opposed to a table somewhere. The specific implementation will depend your IdP, but below is an example in SimpleSAMLphp that may or may not be directly adaptable to your specific SAML IDP.
+To avoid the need for an extra column for every user in your system, you can utilize a `static attribute` to send over the required `studentLicenseIds` if your IdP allows configuring one. This is set up in your configuration as opposed to a table somewhere. The specific implementation will depend on your IdP, but below is an example in SimpleSAMLphp that may or may not be directly adaptable to your specific SAML IdP.
 
 <details className={'alert alert--secondary'}>
 <summary>A SimpleSAMLphp Example</summary>
 
-This is a potential solution to sending the required studentLicenseId in the SAML payload without needing to adjust user records in SimplePHP.
+This is a potential solution to sending the required studentLicenseId in the SAML payload without needing to adjust user records in SimpleSAMLphp.
 
 The recommended strategy is to use an "Auth Proc Filter" ([documentation here](https://simplesamlphp.org/docs/stable/simplesamlphp-authproc)).
 
-From those docs, modify `saml20-sp-remote.php` and in the existing 'authproc' => array section (add it missing), add static attributes using the core:AttributeAdd functionality like so:
+From those docs, modify `saml20-sp-remote.php` and in the existing 'authproc' => array section (add it if missing), add static attributes using the core:AttributeAdd functionality like so:
 
 <Tabs>
 <TabItem value="basic" label="Basic Example" default>
@@ -177,18 +177,18 @@ $metadata['https://example.com'] = array(
 :::
 
 ### Learner Access Restrictions
-All access restrictions, or lack there of, are handled on the IdP side of things. So if applicable, make sure sufficent role permissions have been granted to the learners who'll need access to the IE platform before they need it.
+All access restrictions, or lack thereof, are handled on the IdP side of things. So if applicable, make sure sufficient role permissions have been granted to the learners who'll need access to the IE platform before they need it.
 
 From IE's perspective, there's not much downside to providing access to all accounts in the IdP side (ie no restrictions) as learners who need access to the IE content may change, and any learners who no longer need access or who never needed it will typically avoid.
 
 ## Authentication
-Logins with IE are SP-initiated SSO with SAML, meaning that the login flow begins on the the SP platform.
+Logins with IE are SP-initiated SSO with SAML, meaning that the login flow begins on the SP platform.
 
 - In order to log a user into their IE client from an external system, you can direct learners to the following URL as a link, a dashboard button, or however else you see fit:
   - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/login/<client-slug>`
   - Your `<client-slug>` will be provided by IE. There will be none if you have your own instance (not common)
 
-- Once a user visits this page, they will be redirected to your IdP for authentication. After authentication is successful, the IdP will send the user back to IE platform with a SAML Response that includes any attributes per the configuration. The user will then be logged into thier SP client and will have access to the content that has been provisioned per the `studentLicenseId` configured in their attributes.
+- Once a user visits this page, they will be redirected to your IdP for authentication. After authentication is successful, the IdP will send the user back to IE platform with a SAML Response that includes any attributes per the configuration. The user will then be logged into their SP client and will have access to the content that has been provisioned per the `studentLicenseId` configured in their attributes.
 
 - Optionally, a `redirectTo` query parameter can be added to the login URL to redirect a learner after authentication
   - `https://`[`<product-domain>`](/definition-of-terms#product-domain)`/access/saml/login/<client-slug>`**`?returnTo=<redirect-path>`**
@@ -205,6 +205,6 @@ To test, simply
 2. **Notify your IE representative** Once notified, IE will consult the SSO logs and verify the correct user details are being sent over.
 
 ## Troubleshooting {#troubleshooting}
-If authenitcation was successful, you should be redirected to the IE platform and logged in. If you are not logged in, and are still located on the IdP side, there's most likely an issue with the configuration on the IdP side.
+If authentication was successful, you should be redirected to the IE platform and logged in. If you are not logged in, and are still located on the IdP side, there's most likely an issue with the configuration on the IdP side.
 
 If on the other hand you are seeing an error, notify your IE representative for next steps. Please include any error messages you see, as well as the page URL used to authenticate and the page URL of the error.
