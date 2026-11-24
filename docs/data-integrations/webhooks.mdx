@@ -52,7 +52,50 @@ Here are a few strategies that you can employ in order to test the integration
 
 ## Authenticating Requests
 
-For security reasons, you may want to limit requests to your endpoint to those coming from our platform. In order to authenticate incoming requests, you can allow access only to the ones coming from our IP addresses. All other requests should be blocked / ignored.
+For security reasons, you should verify that incoming webhook requests actually come from our platform. You can verify requests using an HMAC signature, restrict access by IP address, or both.
+
+### Verifying the HMAC Signature
+
+Every webhook request, including test events, carries an `X-Ti-Hook-Signature` header formatted as `sha256=` followed by the lowercase hex HMAC-SHA256 digest of the raw request body, keyed with your site's **Site Secret**.
+
+- **Request your Site Secret:** Contact our team to obtain your Site Secret. It does not rotate on its own, though it can be rotated on request.
+- **Hash the raw request body:** Compute the HMAC over the exact raw request body bytes as received. Parsing the JSON and re-serializing it can change the bytes and cause verification to fail.
+- **Use constant-time comparison:** Compare the expected signature against the `X-Ti-Hook-Signature` header using a constant-time comparison function (not `===`).
+- **Handle replays / duplicates:** The signature does not include a timestamp, so it does not prevent replay of a captured request and retries can deliver the same event more than once. Deduplicate events on a stable key (e.g., `id` when present, or a combination of `event`, `user`, `notifiableId`, and `timestamp`).
+
+#### Example (Node.js / Express)
+
+```js
+const crypto = require('crypto');
+const express = require('express');
+const app = express();
+
+// express.raw keeps the body bytes exactly as sent; the signature covers them.
+app.post('/webhooks', express.raw({ type: 'application/json' }), (req, res) => {
+  const expected = 'sha256=' + crypto
+      .createHmac('sha256', process.env.WEBHOOK_SITE_SECRET)
+      .update(req.body)
+      .digest('hex');
+  const received = req.get('X-Ti-Hook-Signature') || '';
+  const isValid =
+    received.length === expected.length &&
+    crypto.timingSafeEqual(Buffer.from(received), Buffer.from(expected));
+
+  if (!isValid) {
+    return res.status(401).end();
+  }
+
+  // Acknowledge first, then process the payload.
+  res.status(200).end();
+
+  const payload = JSON.parse(req.body);
+  console.log(payload.event, payload.user, payload.notifiableId);
+});
+```
+
+### IP Allowlisting
+
+You can also restrict incoming requests to those originating from our IP addresses and block or ignore all others:
 - **54.243.7.71**
 - **44.214.229.234**
 - **44.215.13.175**
